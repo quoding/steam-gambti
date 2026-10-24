@@ -22,7 +22,9 @@ BACKUP_META = "gembti_backup_meta"
 
 
 def _shred(path: Path) -> None:
-    """임시 사본을 0으로 덮어쓴 뒤 삭제."""
+    """임시 사본을 0으로 덮어쓴 뒤 삭제.
+    SSD·저널링 파일시스템에서는 물리 블록의 완전 삭제를 보장하지 않는다. 보장 범위는
+    '최종 백업 파일 내용에 서술 원문이 없다'(verify_safe_copy가 검사)는 것까지다."""
     for f in (path, Path(str(path) + "-journal"), Path(str(path) + "-wal"), Path(str(path) + "-shm")):
         if f.exists():
             size = f.stat().st_size

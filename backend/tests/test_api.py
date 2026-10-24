@@ -182,3 +182,28 @@ def test_service_code_has_no_external_calls():
         imports = [ln for ln in (root / f).read_text().splitlines() if ln.lstrip().startswith(("import ", "from "))]
         bad = [ln for ln in imports if any(m in ln for m in ("httpx", "requests", "urllib", "collector", "jev"))]
         assert not bad, (f, bad)
+
+
+def test_snapshot_with_excluded_content_is_rejected(client, var_dir):
+    before = json.loads(config.ACTIVE_SNAPSHOT_FILE.read_text())
+    games = fixture_games()
+    games[0] = {**games[0], "appid": 2495450}  # content_review: exclude
+    bad = make_snapshot(var_dir, games, sid="has-excluded")
+    with pytest.raises(ValueError, match="콘텐츠 정책 위반"):
+        catalog_mod.promote(bad, expected=40)
+    pend = fixture_games()
+    pend[0] = {**pend[0], "tags": pend[0]["tags"] + [{"tagid": 9130, "weight": 10, "rank": 9}]}  # 미검토 + 트리거
+    with pytest.raises(ValueError, match="콘텐츠 정책 위반"):
+        catalog_mod.promote(make_snapshot(var_dir, pend, sid="pending"), expected=40)
+    # 롤백도 같은 검증: 이미 snapshots/에 있는 위반 스냅샷으로는 돌아갈 수 없다
+    import shutil
+    shutil.copy2(bad, config.SNAPSHOT_DIR / "has-excluded.db")
+    with pytest.raises(ValueError, match="콘텐츠 정책 위반"):
+        catalog_mod.rollback("has-excluded", expected=40)
+    held = fixture_games()
+    held[0] = {**held[0], "appid": 3464370}  # hold는 허용(추천 단계에서만 빠짐)
+    catalog_mod.promote(make_snapshot(var_dir, held, sid="has-hold"), expected=40)
+    r = client.post("/api/submissions", json={"answers": REF}).json()
+    assert 3464370 not in [i["appid"] for i in r["recommendations"]["items"]]
+    catalog_mod.rollback(before["snapshot_id"], expected=40)
+    assert json.loads(config.ACTIVE_SNAPSHOT_FILE.read_text())["snapshot_id"] == before["snapshot_id"]

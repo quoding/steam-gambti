@@ -87,6 +87,16 @@ def validate_snapshot(path: Path, expected: int = EXPECTED_GAMES) -> list[str]:
             errs.append(f"판정 태그 사전 누락 {sorted(targets - have)}")
         if not con.execute("SELECT value FROM meta WHERE key='snapshot_id'").fetchone():
             errs.append("snapshot_id 없음")
+        # 콘텐츠 적격성: 제외(exclude)·미검토(pending) 게임이 있는 스냅샷은 활성화하지 않는다. 보류(hold)는 허용(추천 단계에서 제외).
+        from gembti.policy import content_status
+        tags_by: dict[int, list] = {}
+        for a, t in con.execute("SELECT appid, tagid FROM game_tags"):
+            tags_by.setdefault(a, []).append({"tagid": t})
+        bad_content = sorted(a for a, tg in tags_by.items()
+                             if content_status(get_policy(), {"appid": a, "tags": tg}) in
+                             ("content_excluded", "content_review_pending"))
+        if bad_content:
+            errs.append(f"콘텐츠 정책 위반 게임 {bad_content}")
         con.close()
     except sqlite3.Error as e:
         errs.append(f"sqlite 오류: {e}")
