@@ -180,7 +180,9 @@ def recs_payload(policy: Policy, cat: Catalog, rec: dict) -> dict:
         matched = [_tag_name(policy, cat, t) for t in r["matched_tags"]]
         p["matched_tags"] = matched
         if r["kind"] == "personalized":
-            p["reason"] = f"답변에서 끌린다고 고른 {'·'.join(matched)} 태그가 이 게임에 실제로 붙어 있어요."
+            q = [_tag_name(policy, cat, t) for t in r.get("qualified_tags", r["matched_tags"])]
+            p["matched_tags"] = q
+            p["reason"] = f"답변에서 끌린다고 고른 {'·'.join(q)} 태그가 이 게임의 주요 태그로 붙어 있어요."
         elif matched:
             p["reason"] = f"{'·'.join(matched)} 태그가 겹쳐요. 판정 근거가 적어 관심 확인용으로 보여드려요."
         else:

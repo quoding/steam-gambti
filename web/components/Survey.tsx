@@ -215,7 +215,7 @@ export default function Survey({
             <div className="q-text" tabIndex={-1} ref={headingRef}>{f.text}</div>
             <textarea value={v} maxLength={f.max_chars} placeholder="쓰고 싶은 만큼만 적어주세요. 비워둬도 괜찮아요."
               onChange={(e) => setData((d) => ({ ...d, free_texts: { ...d.free_texts, [f.free_text_id]: e.target.value } }))} />
-            <div className="row tiny"><span>유형·추천 계산에는 쓰이지 않아요.</span><span className="spacer" /><span>{v.length} / {f.max_chars}</span></div>
+            <div className="row tiny"><span>유형·추천 계산에는 쓰이지 않아요. 30일 뒤 지워지고 백업에는 넣지 않아요.</span><span className="spacer" /><span>{v.length} / {f.max_chars}</span></div>
             <div className="navrow">
               <button className="btn btn-ghost" onClick={() => p && go(p)}>이전</button>
               <span className="spacer" />
@@ -240,8 +240,8 @@ export default function Survey({
             <div>
               <div style={{ fontWeight: 700 }}>연구용 오프라인 분석 동의 (선택)</div>
               <div className="tiny">
-                동의하면 저장된 답변과 서술을 나중에 운영자가 별도 분석 도구로 다시 판정해볼 수 있어요. 서술은 30일 뒤 지워져요.
-                동의하지 않아도 결과는 똑같아요.
+                동의하면 저장된 답변과 서술을 나중에 운영자가 별도 분석 도구로 다시 판정해볼 수 있어요. 서술은 30일 뒤 지워지고,
+                백업에는 들어가지 않아 복구 대상에서도 빠져요. 동의하지 않아도 결과는 똑같아요.
               </div>
             </div>
             <label className="switch">

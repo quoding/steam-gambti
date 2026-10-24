@@ -18,7 +18,7 @@ from collections import Counter, defaultdict
 
 from gembti.collector.normalize import assign_bucket, exclusion_reasons, norm_key, normalize_item, review_size
 from gembti.config import CATALOG_DIR, POLICY_DIR, RAW_DIR, STAGING_DIR
-from gembti.policy import load_policy
+from gembti.policy import content_status, load_policy
 
 CATALOG_POLICY = json.loads((POLICY_DIR / "catalog.json").read_text(encoding="utf-8"))
 QUOTAS = {g: (q["small"], q["mid"], q["large"], q["korean_min"]) for g, q in CATALOG_POLICY["quotas"].items()}
@@ -119,7 +119,7 @@ def load_run(run_id: str):
     return tagl, items, failed_ids, requested
 
 
-def select(eligible: list[dict], log) -> tuple[list[dict] | None, dict]:
+def select(eligible: list[dict], log, fixed: set[int] | None = None) -> tuple[list[dict] | None, dict]:
     import importlib
     from typing import Any
 
@@ -141,6 +141,8 @@ def select(eligible: list[dict], log) -> tuple[list[dict] | None, dict]:
     prob = pulp.LpProblem("gembti_catalog", pulp.LpMinimize)
     x = {g["appid"]: pulp.LpVariable(f"x_{g['appid']}", cat="Binary") for g in eligible}
     prob += pulp.lpSum(rank[a] * v for a, v in x.items())
+    for a in (fixed or set()) & set(x):  # 기존 manifest 유지: 교체 대상 외에는 그대로 둔다
+        prob += x[a] == 1, f"keep_{a}"
     for b, (s, m, l_, kmin) in QUOTAS.items():
         for size, q in zip(SIZES, (s, m, l_)):
             prob += pulp.lpSum(x[g["appid"]] for g in slots.get((b, size), [])) == q, f"slot_{b}_{size}"
@@ -190,6 +192,8 @@ def verify(chosen: list[dict]) -> dict:
     checks[f"total == {CATALOG_POLICY['total']}"] = len(chosen) == CATALOG_POLICY["total"]
     checks["unique appids"] = len({g["appid"] for g in chosen}) == len(chosen)
     checks["no exclusion reasons"] = all(not g["exclusion_reasons"] for g in chosen)
+    checks["no content exclude/pending"] = all(
+        content_status(load_policy(), g) in (None, "content_hold") for g in chosen if "tags" in g)
     checks["korean status known"] = all(g["korean"] in ("true", "false") for g in chosen)
     return checks
 
@@ -204,6 +208,7 @@ def verify_snapshot(path) -> dict:
         tags = {t[0] for t in con.execute("SELECT tagid FROM game_tags WHERE appid = ?", (r["appid"],))}
         games.append({"appid": r["appid"], "bucket": r["manifest_bucket"], "size": r["review_size"],
                       "korean": r["korean"], "has_coop": COOP in tags, "has_pvp": PVP in tags,
+                      "tags": [{"tagid": t} for t in tags],
                       "series_id": r["series_id"], "developer_key": r["developer_key"], "exclusion_reasons": [],
                       "review_count": r["review_count"], "percent_positive": r["percent_positive"]})
     con.close()
@@ -220,7 +225,12 @@ def verify_snapshot(path) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-id", required=True)
+    ap.add_argument("--keep-from", help="이 manifest의 적격 게임은 유지하고 빠진 칸만 교체")
     args = ap.parse_args()
+    fixed: set[int] = set()
+    if args.keep_from:
+        from pathlib import Path
+        fixed = {g["appid"] for g in json.loads(Path(args.keep_from).read_text(encoding="utf-8"))["games"]}
     lines = []
 
     def log(s):
@@ -253,6 +263,9 @@ def main() -> None:
         g = normalize_item(*items[appid])
         g["appid"] = appid
         g["exclusion_reasons"] = exclusion_reasons(g, target, now_ts)
+        cs = content_status(policy, g)
+        if cs and not (cs == "content_hold" and appid in fixed):  # 보류는 기존 구성원일 때만 남김(추천은 안 함)
+            g["exclusion_reasons"].append(cs)
         g["bucket"] = assign_bucket(g, group_of, social)
         if g["bucket"] is None and "no_target_tag" not in g["exclusion_reasons"]:
             g["exclusion_reasons"].append("only_social_target_tags")
@@ -283,7 +296,10 @@ def main() -> None:
         for a in sorted(failed_ids):
             w.writerow([a, "", False, "fetch_failed", "", "", "", "", "", "", "", "", "", "", "", "", ""])
 
-    chosen, diag = select(eligible, log)
+    if fixed:
+        dropped = sorted(fixed - {g["appid"] for g in eligible})
+        log(f"기존 manifest {len(fixed)}개 유지, 제외되어 교체할 게임: {dropped}")
+    chosen, diag = select(eligible, log, fixed)
     manifest = {
         "catalog_policy_version": policy.versions["catalog_policy_version"],
         "raw_run_id": args.run_id,

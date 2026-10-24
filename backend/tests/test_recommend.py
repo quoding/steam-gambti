@@ -109,3 +109,58 @@ def test_idf_bounds():
     cat = [game(i, [(1695, 100)]) for i in range(300)]
     idf = compute_idf(P, cat)
     assert idf[1695] == 1.0 and idf[1666] == 2.0
+
+
+# ---------------------------------------------------------------- algorithm v1.3: 개인화 자격 W≥0.3
+
+def test_qualify_boundary_0299_vs_0300():
+    # 오픈월드 W=1.0(G01) + 퍼즐 W=0.299 → 자격 그룹 1개 → 참고
+    a = game(1, [(1695, 1000), (1664, 299)])
+    b = game(2, [(1695, 1000), (1664, 300)])  # 퍼즐 W=0.300 → 자격 그룹 2개 → 개인화
+    res = recommend(P, USER, [a, b], Filters(), set())
+    assert ids(res, "personalized") == [2] and ids(res, "reference") == [1]
+    item = next(r for r in res["items"] if r["appid"] == 2)
+    assert item["qualified_tags"] == [1664, 1695]
+
+
+def test_same_group_counts_once():
+    # 오픈월드·탐험(같은 G01) 둘 다 W≥0.3이어도 그룹 1개 → 개인화 아님
+    g = game(1, [(1695, 1000), (3834, 900)])
+    res = recommend(P, USER, [g], Filters(), set())
+    assert ids(res, "personalized") == [] and ids(res, "reference") == [1]
+
+
+def test_score_formula_unchanged_by_qualification():
+    # 약한 일치(W<0.3)도 점수 기여는 그대로 (점수식 유지)
+    g = game(1, [(1695, 1000), (1664, 500), (1742, 100)])
+    res = recommend(P, USER, [g], Filters(), set())
+    from gembti.recommend import compute_idf
+    idf = compute_idf(P, [g])
+    exp = 1.0 * idf[1695] * 1 + 1.0 * idf[1664] * 0.5 + 1.0 * idf[1742] * 0.1
+    assert abs(res["items"][0]["score"] - round(exp, 6)) < 1e-5
+    assert res["items"][0]["qualified_tags"] == [1664, 1695]
+
+
+def test_social_groups_still_separate():
+    u = judge(P, {"Q17": "C", "Q18": "C"}).tags  # 협동·PvP positive
+    g = game(1, [(1685, 1000), (1775, 400)])
+    assert ids(recommend(P, u, [g], Filters(), set()), "personalized") == [1]
+
+
+# ---------------------------------------------------------------- 콘텐츠 적격성
+
+def test_content_exclusion_applies_to_all_lists():
+    excluded = game(2495450, [(1695, 1000), (1664, 900)], reviews=10 ** 6)  # 검토 결과 exclude
+    held = game(3464370, [(1695, 1000), (1664, 900)], reviews=10 ** 6)  # hold
+    pending = game(777, [(1695, 1000), (1664, 900), (12095, 300)], reviews=10 ** 6)  # 검토 기록 없음 + 트리거 태그
+    kept = game(1920960, [(1695, 1000), (1664, 900), (9130, 200)], reviews=10)  # keep: 태그만으로 제외 안 함
+    ok = game(5, [(1695, 1000), (1664, 900)])
+    cat = [excluded, held, pending, kept, ok]
+    res = recommend(P, USER, cat, Filters(), set())
+    assert set(ids(res)) == {1920960, 5}
+    reasons = {e["appid"]: e["reasons"] for e in res["excluded"]}
+    assert reasons[2495450] == ["content_excluded"] and reasons[3464370] == ["content_hold"]
+    assert reasons[777] == ["content_review_pending"]
+    assert set(popularity_baseline(cat, Filters(), set(), P)) == {1920960, 5}
+    from gembti.recommend import full_personalized_ranking
+    assert set(full_personalized_ranking(P, USER, cat, Filters(), set())) == {1920960, 5}

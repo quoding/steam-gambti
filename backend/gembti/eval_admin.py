@@ -243,11 +243,26 @@ def main_section(con) -> list[str]:
     return out
 
 
+def exposure_line(con) -> str:
+    """진단 지표: 활성 스냅샷 게임 중 실제 제출 추천에 한 번도 나오지 않은 수. 노출을 강제로 맞추지 않는다."""
+    try:
+        cat = load_active_catalog()
+    except CatalogUnavailable:
+        return "- 카탈로그 노출 진단: 카탈로그 없음"
+    shown = {r[0] for r in con.execute(
+        "SELECT DISTINCT r.appid FROM recommendations r JOIN rec_requests q USING (submission_id, request_no) "
+        "WHERE q.snapshot_id = ? AND r.kind != 'popular_baseline'", (cat.snapshot_id,))}
+    n_req = con.execute("SELECT COUNT(*) FROM rec_requests WHERE snapshot_id = ?", (cat.snapshot_id,)).fetchone()[0]
+    return (f"- 카탈로그 노출 진단(진단용·점수 미반영): 추천 요청 {n_req}건에서 노출 {len(shown)}/{len(cat.games)}개, "
+            f"미노출 {len(cat.games) - len(shown)}개")
+
+
 def report() -> str:
     con = db.connect()
     db.migrate(con)
     tc = tech_check(con)
-    lines = [f"# 겜BTI 평가 보고서 ({now_iso()})", "",
+    exposure = exposure_line(con)
+    lines = [f"# 겜BTI 평가 보고서 ({now_iso()})", "", exposure,
              f"- 기술 검증: {'통과' if tc['pass'] else '실패'} " + json.dumps(tc, ensure_ascii=False),
              "- 기술 검증은 사용자 추천 품질 통과와 별개다.", ""]
     lines += pilot_section(con) + [""] + main_section(con)

@@ -1,0 +1,188 @@
+{
+ "content_policy_version": "v1.0",
+ "catalog_policy_version": "v1.3.2",
+ "rule": "성인 전용(descriptor 3·4)은 수집 단계에서 제외. 그 밖에 성적 콘텐츠를 주된 목적으로 하는 게임은 exclude, 판단 보류는 hold. exclude·hold는 개인화·참고·인기 기준선 모두에서 제외. 폭력·공포·일반 성인 주제와 관련 태그 하나만으로는 제외하지 않음.",
+ "review_trigger_tagids": [
+  6650,
+  9130,
+  12095,
+  40500
+ ],
+ "reviews": [
+  {
+   "appid": 213670,
+   "decision": "keep",
+   "basis": "코미디 RPG. 성인 유머·노출 태그는 있으나 성적 콘텐츠 중심 아님. 상점 성인 안내 없음",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 238320,
+   "decision": "keep",
+   "basis": "생존 공포. 안내문은 폭력·고어 중심(성적 내용 일부). 폭력·공포는 일괄 제외 대상 아님",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 324160,
+   "decision": "keep",
+   "basis": "Key 비주얼 노벨(전연령판). 성적 안내 없음, 가족·성장 이야기 중심",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 424280,
+   "decision": "keep",
+   "basis": "격투 액션. 성적 콘텐츠 안내 없음",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 432350,
+   "decision": "keep",
+   "basis": "턴제 RPG. 설명에 '애니메 팬서비스'가 있으나 전투·수집 중심",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 434570,
+   "decision": "keep",
+   "basis": "협동 슈팅. 성적 안내 없음, 고어·유머 중심",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 858940,
+   "decision": "keep",
+   "basis": "학원 미스터리 비주얼 노벨. 성적 안내 없음",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 1129190,
+   "decision": "keep",
+   "basis": "성장·관계 비주얼 노벨. 성적 안내 없음",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 1230140,
+   "decision": "keep",
+   "basis": "SF 비주얼 노벨(스토리 중심). 상점 성인 안내 없음",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 1284410,
+   "decision": "keep",
+   "basis": "카드 게임. 일부 카드 일러스트 노출 태그. 성적 콘텐츠 중심 아님",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 1289310,
+   "decision": "keep",
+   "basis": "퍼즐. 안내문: 노출 의상·포즈, '모두 순한 수준'. 퍼즐 중심",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 1388880,
+   "decision": "keep",
+   "basis": "심리 공포 비주얼 노벨. 안내문: 자해·자살·성적 암시 주제. 공포가 중심",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 1727650,
+   "decision": "keep",
+   "basis": "좀비 액션. 안내문: 폭력·일반 성인 콘텐츠. 성적 콘텐츠 중심 아님",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 1895350,
+   "decision": "keep",
+   "basis": "선택 기반 이야기. 안내문: 약물 암시·사고성 폭력",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 1920960,
+   "decision": "keep",
+   "basis": "데스크톱 펫(오픈소스). 설명·스크린샷 모두 일상 상호작용. 성적 태그는 사용자 태그만",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 2052410,
+   "decision": "keep",
+   "basis": "TYPE-MOON 비주얼 노벨. 성적 안내 없음",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 2144590,
+   "decision": "exclude",
+   "basis": "안내문: 노출 의상·성적 암시 행동·'성폭행처럼 보일 수 있는 행동'. 약물·납치 상황이 게임 전제이고 성적 상황이 주된 내용",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 2206340,
+   "decision": "keep",
+   "basis": "비주얼 노벨 후일담. 안내문: 노출 의상 일러스트·키스, 성관계는 화면에 없음. 연애 이야기 중심",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 2495450,
+   "decision": "exclude",
+   "basis": "설명은 일상 RPG이나 스크린샷이 캐릭터 신체 강조 위주, 사용자 태그 1위가 선정적 콘텐츠(헨타이·노출 동반), descriptor 1. 성적 콘텐츠가 주된 목적으로 판단",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 2527500,
+   "decision": "keep",
+   "basis": "공포 어드벤처. 안내문: 살인·유혈, 검열 옵션. 성적 콘텐츠 중심 아님",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 2592160,
+   "decision": "keep",
+   "basis": "슈퍼히어로 코미디. 안내문: 일부 노출·욕설·약물. 선택 기반 이야기 중심",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 2983250,
+   "decision": "keep",
+   "basis": "Key 비주얼 노벨. 안내문: 키스·노출 등 가벼운 성적 내용. 이야기 중심",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 3464370,
+   "decision": "hold",
+   "basis": "안내문: 노출 의상·부분 노출·약한 성적 텍스트, 스크린샷도 선정적 연출 다수. 이야기 어드벤처이나 성적 요소 비중 판단이 어려움 → 추가 검토 전 보류",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 3618850,
+   "decision": "keep",
+   "basis": "단어 로그라이크. 안내문: 만화풍 폭력·노출·약물·노골적 문장. 성적 콘텐츠 중심 아님",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  },
+  {
+   "appid": 4643090,
+   "decision": "keep",
+   "basis": "데스크톱 컴패니언. 설명·스크린샷 일상 애니메이션. 성적 안내 없음",
+   "source": "Steam 상점 appdetails(short/about 설명·content_descriptors 안내문)",
+   "checked_at": "2026-10-24"
+  }
+ ]
+}

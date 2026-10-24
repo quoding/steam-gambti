@@ -1,7 +1,7 @@
 {
- "catalog_policy_version": "v1.3.1",
+ "catalog_policy_version": "v1.3.2",
  "raw_run_id": "2026-10-24a",
- "built_at": "2026-10-24T19:14:25+0900",
+ "built_at": "2026-10-24T19:32:46+0900",
  "criteria": {
   "min_reviews": 500,
   "min_percent_positive": 75,
@@ -75,10 +75,11 @@
   "seeds": 4824,
   "fetched": 4824,
   "failed": 0,
-  "eligible": 2393,
+  "eligible": 2197,
   "exclusion_reasons": {
    "only_social_target_tags": 205,
    "positive_lt_75": 460,
+   "content_review_pending": 303,
    "not_purchasable_kr": 8,
    "reviews_lt_500": 1678,
    "unreleased": 9,
@@ -90,7 +91,8 @@
    "not_base_game": 1,
    "windows_not_confirmed": 1,
    "no_target_tag": 2,
-   "tags_missing": 1
+   "tags_missing": 1,
+   "content_excluded": 2
   }
  },
  "selection": {
@@ -98,28 +100,28 @@
   "slots": {
    "G01/small": {
     "quota": 9,
-    "available": 123,
-    "korean_available": 49
+    "available": 119,
+    "korean_available": 47
    },
    "G01/mid": {
     "quota": 18,
-    "available": 137,
-    "korean_available": 99
+    "available": 124,
+    "korean_available": 89
    },
    "G01/large": {
     "quota": 9,
-    "available": 77,
-    "korean_available": 63
+    "available": 68,
+    "korean_available": 54
    },
    "G02/small": {
     "quota": 9,
-    "available": 145,
-    "korean_available": 85
+    "available": 139,
+    "korean_available": 82
    },
    "G02/mid": {
     "quota": 18,
-    "available": 76,
-    "korean_available": 61
+    "available": 74,
+    "korean_available": 59
    },
    "G02/large": {
     "quota": 9,
@@ -128,13 +130,13 @@
    },
    "G03/small": {
     "quota": 9,
-    "available": 239,
-    "korean_available": 136
+    "available": 211,
+    "korean_available": 125
    },
    "G03/mid": {
     "quota": 18,
-    "available": 122,
-    "korean_available": 82
+    "available": 112,
+    "korean_available": 78
    },
    "G03/large": {
     "quota": 9,
@@ -153,33 +155,33 @@
    },
    "G04/large": {
     "quota": 8,
-    "available": 13,
-    "korean_available": 10
+    "available": 12,
+    "korean_available": 9
    },
    "G05/small": {
     "quota": 10,
-    "available": 173,
-    "korean_available": 85
+    "available": 166,
+    "korean_available": 83
    },
    "G05/mid": {
     "quota": 20,
-    "available": 109,
-    "korean_available": 70
+    "available": 105,
+    "korean_available": 69
    },
    "G05/large": {
     "quota": 10,
-    "available": 33,
-    "korean_available": 27
+    "available": 31,
+    "korean_available": 25
    },
    "G06/small": {
     "quota": 7,
-    "available": 198,
+    "available": 196,
     "korean_available": 112
    },
    "G06/mid": {
     "quota": 14,
-    "available": 112,
-    "korean_available": 76
+    "available": 107,
+    "korean_available": 75
    },
    "G06/large": {
     "quota": 7,
@@ -188,38 +190,38 @@
    },
    "G07/small": {
     "quota": 10,
-    "available": 200,
-    "korean_available": 88
+    "available": 158,
+    "korean_available": 75
    },
    "G07/mid": {
     "quota": 20,
-    "available": 166,
-    "korean_available": 93
+    "available": 130,
+    "korean_available": 73
    },
    "G07/large": {
     "quota": 10,
-    "available": 53,
-    "korean_available": 38
+    "available": 40,
+    "korean_available": 30
    },
    "G08/small": {
     "quota": 7,
-    "available": 45,
-    "korean_available": 22
+    "available": 42,
+    "korean_available": 20
    },
    "G08/mid": {
     "quota": 14,
-    "available": 54,
+    "available": 53,
     "korean_available": 27
    },
    "G08/large": {
     "quota": 7,
-    "available": 43,
-    "korean_available": 32
+    "available": 38,
+    "korean_available": 27
    },
    "G11/small": {
     "quota": 6,
-    "available": 93,
-    "korean_available": 44
+    "available": 90,
+    "korean_available": 42
    },
    "G11/mid": {
     "quota": 15,
@@ -241,7 +243,7 @@
   "slot G02/small == 9": true,
   "slot G02/mid == 18": true,
   "slot G02/large == 9": true,
-  "korean G02 >= 18 (got 24)": true,
+  "korean G02 >= 18 (got 23)": true,
   "slot G03/small == 9": true,
   "slot G03/mid == 18": true,
   "slot G03/large == 9": true,
@@ -277,6 +279,7 @@
   "total == 300": true,
   "unique appids": true,
   "no exclusion reasons": true,
+  "no content exclude/pending": true,
   "korean status known": true
  },
  "status": "frozen",
@@ -1741,7 +1744,7 @@
    "developers": [
     "Techland"
    ],
-   "slot_rank": 11,
+   "slot_rank": 10,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1695&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:09:36+0900",
    "review": {
@@ -1787,7 +1790,7 @@
    "developers": [
     "FromSoftware, Inc."
    ],
-   "slot_rank": 18,
+   "slot_rank": 17,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1695&category1=998&infinite=1&cc=KR&l=english&os=win",
    "fetched_at": "2026-10-24T18:11:42+0900",
    "review": {
@@ -1831,7 +1834,7 @@
    "developers": [
     "FromSoftware, Inc."
    ],
-   "slot_rank": 21,
+   "slot_rank": 20,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1695&category1=998&infinite=1&cc=KR&l=english&os=win",
    "fetched_at": "2026-10-24T18:21:28+0900",
    "review": {
@@ -1943,51 +1946,6 @@
    }
   },
   {
-   "appid": 2144590,
-   "name": "Take me, Vitaly",
-   "bucket": "G02",
-   "review_size": "small",
-   "review_count": 1142,
-   "percent_positive": 98,
-   "korean": "true",
-   "english": "true",
-   "has_coop": false,
-   "has_pvp": false,
-   "target_tags": [
-    3959,
-    1664,
-    3834,
-    599
-   ],
-   "series_id": "series:2144590",
-   "franchise": "Take me, Vitaly",
-   "developer_key": "name:unknown",
-   "developers": [
-    "Старый Билд"
-   ],
-   "slot_rank": 2,
-   "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=3834&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
-   "fetched_at": "2026-10-24T18:33:21+0900",
-   "review": {
-    "result": "pass",
-    "checked_at": "2026-10-24",
-    "source": "GetItems(KR/koreana) raw run 2026-10-24a",
-    "checked_fields": [
-     "type",
-     "visible",
-     "purchasable_kr",
-     "windows",
-     "vr_only",
-     "early_access",
-     "release",
-     "content_descriptorids",
-     "reviews",
-     "languages",
-     "tags"
-    ]
-   }
-  },
-  {
    "appid": 1292020,
    "name": "Armoured Commander II",
    "bucket": "G02",
@@ -2010,7 +1968,7 @@
    "developers": [
     "Gregory Adam Scott"
    ],
-   "slot_rank": 3,
+   "slot_rank": 2,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1716&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:22:17+0900",
    "review": {
@@ -2053,7 +2011,7 @@
    "developers": [
     "Kay Lnk"
    ],
-   "slot_rank": 4,
+   "slot_rank": 3,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1716&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:46:15+0900",
    "review": {
@@ -2096,7 +2054,7 @@
    "developers": [
     "Wanba Studio"
    ],
-   "slot_rank": 5,
+   "slot_rank": 4,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=100&count=100&tags=3834&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:27:59+0900",
    "review": {
@@ -2142,7 +2100,7 @@
     "Dan Schumacher",
     "Hjalte Tagmose"
    ],
-   "slot_rank": 6,
+   "slot_rank": 5,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1716&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:45:41+0900",
    "review": {
@@ -2184,7 +2142,7 @@
    "developers": [
     "Shaun Hammond Business Solutions Limited"
    ],
-   "slot_rank": 7,
+   "slot_rank": 6,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=3959&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:51:25+0900",
    "review": {
@@ -2227,9 +2185,51 @@
    "developers": [
     "chromatophore games"
    ],
-   "slot_rank": 8,
+   "slot_rank": 7,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1716&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:51:25+0900",
+   "review": {
+    "result": "pass",
+    "checked_at": "2026-10-24",
+    "source": "GetItems(KR/koreana) raw run 2026-10-24a",
+    "checked_fields": [
+     "type",
+     "visible",
+     "purchasable_kr",
+     "windows",
+     "vr_only",
+     "early_access",
+     "release",
+     "content_descriptorids",
+     "reviews",
+     "languages",
+     "tags"
+    ]
+   }
+  },
+  {
+   "appid": 3651950,
+   "name": "Evil Egg",
+   "bucket": "G02",
+   "review_size": "small",
+   "review_count": 792,
+   "percent_positive": 97,
+   "korean": "false",
+   "english": "true",
+   "has_coop": false,
+   "has_pvp": false,
+   "target_tags": [
+    3959
+   ],
+   "series_id": "series:3651950",
+   "franchise": "103582791472883313:ivy sly",
+   "developer_key": "clan:43361905",
+   "developers": [
+    "Ivy Sly"
+   ],
+   "slot_rank": 8,
+   "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=3959&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
+   "fetched_at": "2026-10-24T18:49:51+0900",
    "review": {
     "result": "pass",
     "checked_at": "2026-10-24",
@@ -4269,49 +4269,6 @@
    }
   },
   {
-   "appid": 2495450,
-   "name": "Winter Memories",
-   "bucket": "G03",
-   "review_size": "mid",
-   "review_count": 10461,
-   "percent_positive": 97,
-   "korean": "false",
-   "english": "true",
-   "has_coop": false,
-   "has_pvp": false,
-   "target_tags": [
-    599,
-    1695
-   ],
-   "series_id": "series:2495450",
-   "franchise": null,
-   "developer_key": "name:dojin-otome",
-   "developers": [
-    "Dojin Otome"
-   ],
-   "slot_rank": 10,
-   "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=599&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
-   "fetched_at": "2026-10-24T18:37:39+0900",
-   "review": {
-    "result": "pass",
-    "checked_at": "2026-10-24",
-    "source": "GetItems(KR/koreana) raw run 2026-10-24a",
-    "checked_fields": [
-     "type",
-     "visible",
-     "purchasable_kr",
-     "windows",
-     "vr_only",
-     "early_access",
-     "release",
-     "content_descriptorids",
-     "reviews",
-     "languages",
-     "tags"
-    ]
-   }
-  },
-  {
    "appid": 3361470,
    "name": "Digseum",
    "bucket": "G03",
@@ -4334,7 +4291,7 @@
    "developers": [
     "Rat Monthly"
    ],
-   "slot_rank": 11,
+   "slot_rank": 10,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=3834&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:47:11+0900",
    "review": {
@@ -4377,7 +4334,7 @@
    "developers": [
     "Goose Minded"
    ],
-   "slot_rank": 12,
+   "slot_rank": 11,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=599&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:24:34+0900",
    "review": {
@@ -4423,7 +4380,7 @@
     "Blibloop",
     "Doot"
    ],
-   "slot_rank": 13,
+   "slot_rank": 12,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=599&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:39:33+0900",
    "review": {
@@ -4467,7 +4424,7 @@
    "developers": [
     "Randumb Studios"
    ],
-   "slot_rank": 14,
+   "slot_rank": 13,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=599&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:22:02+0900",
    "review": {
@@ -4510,7 +4467,7 @@
    "developers": [
     "Randumb Studios"
    ],
-   "slot_rank": 15,
+   "slot_rank": 14,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=599&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:24:00+0900",
    "review": {
@@ -4554,9 +4511,54 @@
    "developers": [
     "OPNeon Games"
    ],
-   "slot_rank": 16,
+   "slot_rank": 15,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=100&count=100&tags=599&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:44:11+0900",
+   "review": {
+    "result": "pass",
+    "checked_at": "2026-10-24",
+    "source": "GetItems(KR/koreana) raw run 2026-10-24a",
+    "checked_fields": [
+     "type",
+     "visible",
+     "purchasable_kr",
+     "windows",
+     "vr_only",
+     "early_access",
+     "release",
+     "content_descriptorids",
+     "reviews",
+     "languages",
+     "tags"
+    ]
+   }
+  },
+  {
+   "appid": 2142790,
+   "name": "Fields of Mistria",
+   "bucket": "G03",
+   "review_size": "mid",
+   "review_count": 33343,
+   "percent_positive": 96,
+   "korean": "false",
+   "english": "true",
+   "has_coop": false,
+   "has_pvp": false,
+   "target_tags": [
+    599,
+    1702,
+    1695,
+    1643
+   ],
+   "series_id": "series:2142790",
+   "franchise": null,
+   "developer_key": "name:npc",
+   "developers": [
+    "NPC Studio"
+   ],
+   "slot_rank": 16,
+   "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1695&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
+   "fetched_at": "2026-10-24T18:33:19+0900",
    "review": {
     "result": "pass",
     "checked_at": "2026-10-24",
@@ -4600,7 +4602,7 @@
    "developers": [
     "Spiderling Studios"
    ],
-   "slot_rank": 26,
+   "slot_rank": 25,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=200&count=100&tags=599&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:11:16+0900",
    "review": {
@@ -8115,7 +8117,7 @@
    "developers": [
     "BetaDwarf"
    ],
-   "slot_rank": 15,
+   "slot_rank": 14,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=200&count=100&tags=32322&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:13:00+0900",
    "review": {
@@ -8159,7 +8161,7 @@
    "developers": [
     "Gaggle Studios, Inc."
    ],
-   "slot_rank": 20,
+   "slot_rank": 19,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=100&count=100&tags=9&category1=998&infinite=1&cc=KR&l=english&os=win",
    "fetched_at": "2026-10-24T18:25:44+0900",
    "review": {
@@ -8209,7 +8211,7 @@
     "Forgotten Empires",
     "Climax Studios"
    ],
-   "slot_rank": 23,
+   "slot_rank": 22,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1695&category1=998&infinite=1&cc=KR&l=english&os=win",
    "fetched_at": "2026-10-24T18:24:32+0900",
    "review": {
@@ -8257,7 +8259,7 @@
    "developers": [
     "Shiro Games"
    ],
-   "slot_rank": 24,
+   "slot_rank": 23,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=200&count=100&tags=599&category1=998&infinite=1&cc=KR&l=english&os=win",
    "fetched_at": "2026-10-24T18:12:50+0900",
    "review": {
@@ -9418,7 +9420,7 @@
     1742,
     3834
    ],
-   "series_id": "series:1222700",
+   "series_id": "series:1225570",
    "franchise": "EA Originals",
    "developer_key": "clan:45012491",
    "developers": [
@@ -9865,7 +9867,7 @@
    "developers": [
     "Freebird Games"
    ],
-   "slot_rank": 14,
+   "slot_rank": 12,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1742&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:33:29+0900",
    "review": {
@@ -9907,7 +9909,7 @@
    "developers": [
     "Undercoders"
    ],
-   "slot_rank": 16,
+   "slot_rank": 14,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1742&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:37:59+0900",
    "review": {
@@ -10773,7 +10775,7 @@
    "developers": [
     "Joeveno"
    ],
-   "slot_rank": 39,
+   "slot_rank": 35,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=100&count=100&tags=1742&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:45:27+0900",
    "review": {
@@ -11376,7 +11378,7 @@
    "developers": [
     "Adamvision Studios"
    ],
-   "slot_rank": 5,
+   "slot_rank": 4,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1662&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:14:35+0900",
    "review": {
@@ -11419,7 +11421,7 @@
    "developers": [
     "Get(Color) Games"
    ],
-   "slot_rank": 6,
+   "slot_rank": 5,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1662&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:35:29+0900",
    "review": {
@@ -11461,7 +11463,7 @@
    "developers": [
     "Adamvision Studios"
    ],
-   "slot_rank": 7,
+   "slot_rank": 6,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=0&count=100&tags=1662&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:17:04+0900",
    "review": {
@@ -11505,7 +11507,7 @@
    "developers": [
     "Adamvision Studios"
    ],
-   "slot_rank": 19,
+   "slot_rank": 18,
    "seed_source": "https://store.steampowered.com/search/results/?query=&start=100&count=100&tags=1775&category1=998&infinite=1&cc=KR&l=english&os=win&sort_by=Reviews_DESC",
    "fetched_at": "2026-10-24T18:17:06+0900",
    "review": {

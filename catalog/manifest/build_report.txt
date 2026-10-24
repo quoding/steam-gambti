@@ -1,6 +1,7 @@
 GetTagList: ko 446 / en 446 tags; 20 target tags present
-seeds 4824, requested 4824, fetched 4824, failed 0, eligible 2393
-exclusion reasons: {"reviews_lt_500": 1678, "positive_lt_75": 460, "early_access": 448, "only_social_target_tags": 205, "no_ko_or_en": 104, "vr_only": 32, "unreleased": 9, "not_purchasable_kr": 8, "korean_status_unknown": 2, "no_target_tag": 2, "kr_store_not_visible": 1, "not_base_game": 1, "windows_not_confirmed": 1, "tags_missing": 1}
+seeds 4824, requested 4824, fetched 4824, failed 0, eligible 2197
+exclusion reasons: {"reviews_lt_500": 1678, "positive_lt_75": 460, "early_access": 448, "content_review_pending": 303, "only_social_target_tags": 205, "no_ko_or_en": 104, "vr_only": 32, "unreleased": 9, "not_purchasable_kr": 8, "korean_status_unknown": 2, "no_target_tag": 2, "content_excluded": 2, "kr_store_not_visible": 1, "not_base_game": 1, "windows_not_confirmed": 1, "tags_missing": 1}
+기존 manifest 300개 유지, 제외되어 교체할 게임: [2144590, 2495450]
 ILP status: Optimal
   [OK] slot G01/small == 9
   [OK] slot G01/mid == 18
@@ -9,7 +10,7 @@ ILP status: Optimal
   [OK] slot G02/small == 9
   [OK] slot G02/mid == 18
   [OK] slot G02/large == 9
-  [OK] korean G02 >= 18 (got 24)
+  [OK] korean G02 >= 18 (got 23)
   [OK] slot G03/small == 9
   [OK] slot G03/mid == 18
   [OK] slot G03/large == 9
@@ -45,5 +46,6 @@ ILP status: Optimal
   [OK] total == 300
   [OK] unique appids
   [OK] no exclusion reasons
+  [OK] no content exclude/pending
   [OK] korean status known
-staging snapshot: var/staging/cat-2026-10-24a-20261024191425.db
+staging snapshot: var/staging/cat-2026-10-24a-20261024193247.db

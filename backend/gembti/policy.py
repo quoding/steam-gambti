@@ -42,6 +42,7 @@ class Policy:
     scoring: dict[str, dict[str, dict[int, int]]]  # qid -> code -> tagid -> points
     types: dict
     aliases: dict
+    content: dict = field(default_factory=dict)  # policy/content_review.json
     tag_by_id: dict[int, Tag] = field(default_factory=dict)
     group_by_id: dict[str, Group] = field(default_factory=dict)
 
@@ -69,6 +70,7 @@ def load_policy(policy_dir: Path = POLICY_DIR) -> Policy:
     sj = _read(policy_dir / "scoring.json")
     ty = _read(policy_dir / "types.json")
     al = _read(policy_dir / "aliases.json")
+    ct = _read(policy_dir / "content_review.json")
 
     tags = []
     for t in tj["tags"]:
@@ -80,7 +82,7 @@ def load_policy(policy_dir: Path = POLICY_DIR) -> Policy:
         qid: {code: {int(k): v for k, v in pts.items()} for code, pts in spec["points"].items()}
         for qid, spec in sj["questions"].items()
     }
-    p = Policy(versions, tags, groups, qj["questions"], qj["free_texts"], qj["intro"], scoring, ty, al)
+    p = Policy(versions, tags, groups, qj["questions"], qj["free_texts"], qj["intro"], scoring, ty, al, ct)
     p.tag_by_id = {t.tagid: t for t in tags}
     p.group_by_id = {g.group_id: g for g in groups}
     validate(p)
@@ -120,8 +122,24 @@ def validate(p: Policy) -> None:
         errs.append("모든 태그가 정확히 한 그룹에 속해야 함")
     if p.types.get("type_mapping_version") != p.versions["type_mapping_version"]:
         errs.append("type_mapping_version 불일치")
+    if p.content.get("catalog_policy_version") != p.versions["catalog_policy_version"]:
+        errs.append("content_review catalog_policy_version 불일치")
+    if any(r["decision"] not in ("keep", "exclude", "hold") for r in p.content.get("reviews", [])):
+        errs.append("content_review decision은 keep/exclude/hold")
     if errs:
         raise ValueError("정책 무결성 오류: " + "; ".join(errs))
+
+
+def content_status(p: Policy, game: dict) -> str | None:
+    """성적 콘텐츠 적격성. None=적격. 검토 대상 태그가 있는데 검토 기록이 없으면 보류."""
+    decision = {r["appid"]: r["decision"] for r in p.content.get("reviews", [])}.get(game["appid"])
+    if decision == "exclude":
+        return "content_excluded"
+    if decision == "hold":
+        return "content_hold"
+    if decision is None and any(t["tagid"] in p.content.get("review_trigger_tagids", []) for t in game["tags"]):
+        return "content_review_pending"
+    return None
 
 
 @lru_cache(maxsize=1)

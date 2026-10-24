@@ -1,5 +1,5 @@
 {
-  "catalog_policy_version": "v1.3.1",
+  "catalog_policy_version": "v1.3.2",
   "note": "8.2 장르 버킷 × 리뷰 규모 할당. v1.3.1: G11만 소6·중15·대3(이전 6·12·6). 다른 칸에 자동 적용하지 않는다.",
   "review_size_bounds": {"small": [500, 4999], "mid": [5000, 49999], "large": [50000, null]},
   "quotas": {

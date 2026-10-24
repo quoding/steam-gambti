@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 
 from gembti import config, db, evaluation, service
 from gembti.catalog import CatalogUnavailable, load_active_catalog
-from gembti.policy import get_policy
+from gembti.policy import content_status, get_policy
 from gembti.recommend import Filters
 
 policy = get_policy()
@@ -134,7 +134,7 @@ def catalog_search(q: str = "", limit: int = 20):
         return {"status": "catalog_unavailable", "items": []}
     if len(q) < 1:
         return {"status": "ok", "items": []}
-    hits = [g for g in cat.games if q in (g["name"] or "").casefold()]
+    hits = [g for g in cat.games if q in (g["name"] or "").casefold() and content_status(policy, g) is None]
     hits.sort(key=lambda g: (not g["name"].casefold().startswith(q), -g["review_count"]))
     return {"status": "ok", "items": [{"appid": g["appid"], "name": g["name"], "image": g["header_image"]}
                                       for g in hits[: max(1, min(limit, 20))]]}

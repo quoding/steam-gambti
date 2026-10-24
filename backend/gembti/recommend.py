@@ -10,12 +10,13 @@ import math
 from dataclasses import dataclass
 
 from gembti.engine import TagResult
-from gembti.policy import Policy
+from gembti.policy import Policy, content_status
 
 MAX_SLOTS = 5
 STRONG_AVOID_W = 0.5
 AVOID_FACTOR = 1.25
 JACCARD_HOLD = 0.8
+QUALIFY_W = 0.3  # algorithm v1.3: 개인화 자격은 그룹별 일치 태그 W≥0.3
 OS_KEYS = {"windows": "windows", "mac": "mac", "linux": "linux"}
 
 
@@ -46,8 +47,12 @@ def compute_idf(policy: Policy, catalog: list[dict]) -> dict[int, float]:
     return out
 
 
-def passes_filters(game: dict, f: Filters) -> list[str]:
+def passes_filters(game: dict, f: Filters, policy: Policy | None = None) -> list[str]:
     reasons = []
+    if policy is not None:
+        cs = content_status(policy, game)
+        if cs:
+            reasons.append(cs)
     if f.korean_only and game["korean"] != "true":
         reasons.append("filter_korean")
     if game[OS_KEYS[f.os]] != "true":
@@ -62,6 +67,7 @@ def _game_groups(policy: Policy, game: dict) -> set[str]:
 def evaluate_game(policy: Policy, game: dict, user: dict[int, TagResult], idf: dict[int, float]) -> dict:
     W, fallback = weights(game)
     pos: dict[str, dict] = {}
+    qualified: dict[str, int] = {}  # 그룹 -> W≥0.3인 일치 태그(그룹당 1회)
     neg: dict[str, dict] = {}
     strong = []
     weak = []
@@ -74,6 +80,8 @@ def evaluate_game(policy: Policy, game: dict, user: dict[int, TagResult], idf: d
             c = float(tr.normalized) * w * idf[tid]
             if gid not in pos or c > pos[gid]["contribution"]:
                 pos[gid] = {"tagid": tid, "W": w, "contribution": c}
+            if w >= QUALIFY_W and (gid not in qualified or w > W[qualified[gid]]):
+                qualified[gid] = tid
         elif tr.state == "avoid" and tr.normalized is not None:
             # 강한 기피 판정은 태그별 W만으로 (IDF·사용자 강도 미적용)
             if w >= STRONG_AVOID_W:
@@ -87,7 +95,7 @@ def evaluate_game(policy: Policy, game: dict, user: dict[int, TagResult], idf: d
     neg_sum = sum(v["contribution"] for v in neg.values())
     return {
         "appid": game["appid"],
-        "matched_positive": pos, "avoid_contrib": neg,
+        "matched_positive": pos, "qualified": qualified, "avoid_contrib": neg,
         "strong_avoid": strong, "weak_avoid": weak,
         "score": pos_sum - AVOID_FACTOR * neg_sum,
         "penalty": neg_sum,
@@ -111,7 +119,7 @@ def recommend(policy: Policy, user: dict[int, TagResult], catalog: list[dict], f
         if g["appid"] in played:
             excluded.append({"appid": g["appid"], "reasons": ["played"]})
             continue
-        fr = passes_filters(g, filters)
+        fr = passes_filters(g, filters, policy)
         if fr:
             excluded.append({"appid": g["appid"], "reasons": fr})
             continue
@@ -125,7 +133,7 @@ def recommend(policy: Policy, user: dict[int, TagResult], catalog: list[dict], f
         g, ev = item
         return (-ev["score"], -(g["percent_positive"] or 0), -(g["review_count"] or 0), g["appid"])
 
-    eligible = sorted([x for x in pool if len(x[1]["matched_positive"]) >= 2], key=pers_key)
+    eligible = sorted([x for x in pool if len(x[1]["qualified"]) >= 2], key=pers_key)
 
     picked: list[tuple[dict, dict]] = []
     series_used: set[str] = set()
@@ -165,6 +173,7 @@ def recommend(policy: Policy, user: dict[int, TagResult], catalog: list[dict], f
     def row(kind, rank, g, ev):
         return {"rank": rank, "kind": kind, "appid": g["appid"],
                 "matched_tags": sorted(v["tagid"] for v in ev["matched_positive"].values()),
+                "qualified_tags": sorted(ev["qualified"].values()),
                 "matched_groups": sorted(ev["matched_positive"]),
                 "contributions": {k: round(v["contribution"], 6) for k, v in ev["matched_positive"].items()},
                 "weak_avoid": ev["weak_avoid"], "penalty": round(ev["penalty"], 6),
@@ -184,9 +193,11 @@ def recommend(policy: Policy, user: dict[int, TagResult], catalog: list[dict], f
     }
 
 
-def popularity_baseline(catalog: list[dict], filters: Filters, played: set[int]) -> list[int]:
-    """순수 인기 기준선: 응답·추론 태그를 읽지 않는다. 기피 제외·패널티 없음."""
-    pool = [g for g in catalog if g["appid"] not in played and not passes_filters(g, filters)]
+def popularity_baseline(catalog: list[dict], filters: Filters, played: set[int],
+                        policy: Policy | None = None) -> list[int]:
+    """순수 인기 기준선: 응답·추론 태그를 읽지 않는다. 기피 제외·패널티 없음.
+    콘텐츠 적격성(성적 콘텐츠 제외)은 양쪽 목록에 같게 적용한다."""
+    pool = [g for g in catalog if g["appid"] not in played and not passes_filters(g, filters, policy)]
     pool.sort(key=lambda g: (-(g["review_count"] or 0), -(g["percent_positive"] or 0), g["appid"]))
     out: list[int] = []
     series: set[str] = set()
@@ -206,10 +217,10 @@ def full_personalized_ranking(policy: Policy, user: dict[int, TagResult], catalo
     idf = idf or compute_idf(policy, catalog)
     rows = []
     for g in catalog:
-        if g["appid"] in played or passes_filters(g, filters):
+        if g["appid"] in played or passes_filters(g, filters, policy):
             continue
         ev = evaluate_game(policy, g, user, idf)
-        if ev["strong_avoid"] or len(ev["matched_positive"]) < 2:
+        if ev["strong_avoid"] or len(ev["qualified"]) < 2:
             continue
         rows.append((-ev["score"], -(g["percent_positive"] or 0), -(g["review_count"] or 0), g["appid"]))
     return [r[3] for r in sorted(rows)]

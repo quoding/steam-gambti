@@ -106,7 +106,7 @@ def submit(body: EvalSubmitIn):
         filters = Filters(**body.filters.model_dump())
         exclude = set(played) | set(favorites)  # 좋아하는 게임은 제외에만 사용
         rec = recommend(policy, j.tags, cat.games, filters, exclude, cat.idf)
-        baseline = popularity_baseline(cat.games, filters, exclude)
+        baseline = popularity_baseline(cat.games, filters, exclude, policy)
         service.store_recommendations(con, sub_id, "eval", filters, sorted(exclude), cat, rec, baseline)
         fixed = [r["appid"] for r in rec["items"]]
         hidden = hidden_favorite(code, favorites)
