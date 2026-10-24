@@ -354,7 +354,7 @@ def main() -> None:
     path = STAGING_DIR / f"{snapshot_id}.db"
     write_snapshot_db(path, snapshot_id, chosen, ko, en, manifest_meta={
         "raw_run_id": args.run_id, "catalog_policy_version": manifest["catalog_policy_version"]})
-    log(f"staging snapshot: {path}")
+    log(f"staging snapshot: var/staging/{path.name}")  # 공개 보고서에 서버 절대 경로를 남기지 않는다
     (MANIFEST_DIR / "build_report.txt").write_text("\n".join(lines) + "\n")
 
 
