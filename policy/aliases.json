@@ -1,0 +1,58 @@
+{
+  "note": "v1 판정 태그 밖. 보존·검수에만 사용, 사용자 점수·추천을 늘리지 않음(5.1).",
+  "aliases": [
+    {
+      "representative": 1637,
+      "members": [
+        1637,
+        1638
+      ],
+      "kind": "same_meaning"
+    },
+    {
+      "representative": 6054,
+      "members": [
+        6054,
+        102530
+      ],
+      "kind": "same_meaning"
+    },
+    {
+      "representative": 4535,
+      "members": [
+        4535,
+        7918
+      ],
+      "kind": "same_meaning"
+    },
+    {
+      "representative": 5432,
+      "members": [
+        5432,
+        42329
+      ],
+      "kind": "same_topic"
+    }
+  ],
+  "dedupe_families": [
+    {
+      "family": "billiards",
+      "members": [
+        4852,
+        363767,
+        17927
+      ]
+    },
+    {
+      "family": "flight",
+      "members": [
+        15045,
+        92092
+      ]
+    }
+  ],
+  "preserved_non_target": [
+    42804,
+    1091588
+  ]
+}

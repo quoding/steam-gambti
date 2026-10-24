@@ -1,0 +1,21 @@
+{
+  "catalog_policy_version": "v1.3.1",
+  "note": "8.2 장르 버킷 × 리뷰 규모 할당. v1.3.1: G11만 소6·중15·대3(이전 6·12·6). 다른 칸에 자동 적용하지 않는다.",
+  "review_size_bounds": {"small": [500, 4999], "mid": [5000, 49999], "large": [50000, null]},
+  "quotas": {
+    "G01": {"small": 9, "mid": 18, "large": 9, "korean_min": 18},
+    "G02": {"small": 9, "mid": 18, "large": 9, "korean_min": 18},
+    "G03": {"small": 9, "mid": 18, "large": 9, "korean_min": 18},
+    "G04": {"small": 8, "mid": 16, "large": 8, "korean_min": 16},
+    "G05": {"small": 10, "mid": 20, "large": 10, "korean_min": 20},
+    "G06": {"small": 7, "mid": 14, "large": 7, "korean_min": 14},
+    "G07": {"small": 10, "mid": 20, "large": 10, "korean_min": 20},
+    "G08": {"small": 7, "mid": 14, "large": 7, "korean_min": 14},
+    "G11": {"small": 6, "mid": 15, "large": 3, "korean_min": 12}
+  },
+  "min_coop": 40,
+  "min_pvp": 40,
+  "max_series": 2,
+  "max_developer": 6,
+  "total": 300
+}

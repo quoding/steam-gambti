@@ -1,0 +1,107 @@
+{
+  "groups": [
+    {
+      "group_id": "G01",
+      "name": "넓은 세계",
+      "tagids": [
+        1695,
+        3834
+      ],
+      "social": false
+    },
+    {
+      "group_id": "G02",
+      "name": "반복 원정",
+      "tagids": [
+        1716,
+        3959
+      ],
+      "social": false
+    },
+    {
+      "group_id": "G03",
+      "name": "시뮬레이션·운영",
+      "tagids": [
+        599,
+        12472
+      ],
+      "social": false
+    },
+    {
+      "group_id": "G04",
+      "name": "건설·거점",
+      "tagids": [
+        1643,
+        7332
+      ],
+      "social": false
+    },
+    {
+      "group_id": "G05",
+      "name": "전략",
+      "tagids": [
+        9,
+        1741
+      ],
+      "social": false
+    },
+    {
+      "group_id": "G06",
+      "name": "퍼즐·논리",
+      "tagids": [
+        1664,
+        6129
+      ],
+      "social": false
+    },
+    {
+      "group_id": "G07",
+      "name": "이야기·선택",
+      "tagids": [
+        1742,
+        6426
+      ],
+      "social": false
+    },
+    {
+      "group_id": "G08",
+      "name": "생존·제작",
+      "tagids": [
+        1662,
+        1702
+      ],
+      "social": false
+    },
+    {
+      "group_id": "G09",
+      "name": "협동",
+      "tagids": [
+        1685
+      ],
+      "social": true
+    },
+    {
+      "group_id": "G10",
+      "name": "PvP",
+      "tagids": [
+        1775
+      ],
+      "social": true
+    },
+    {
+      "group_id": "G11",
+      "name": "덱·카드",
+      "tagids": [
+        32322,
+        1666
+      ],
+      "social": false
+    }
+  ],
+  "card_evidence_merge": [
+    [
+      "G09",
+      "G10"
+    ]
+  ]
+}

@@ -1,0 +1,75 @@
+# ── 운영 데이터 (DB·개인 응답·백업·수집 원본·실험·보고서) ─────────────
+var/
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite3
+backups/
+*.jsonl
+reports/
+experiments/**/out/
+experiments/jev/*.db
+
+# 파일럿·평가 참가자 기록(참가 코드·면담 내용). 양식만 커밋하고 채운 파일은 여기에 둔다.
+docs/pilot/records/
+*.filled.csv
+*participants*.csv
+
+# ── 비밀값·인증 정보 ─────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+*credentials*.json
+*.token
+cloudflared*.json
+
+# 개인·로컬 에이전트 설정
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/*.local.*
+
+# ── 빌드·배포 산출물 ──────────────────────────────────────────────
+public/
+public_releases/
+web/.next/
+web/out/
+*.tsbuildinfo
+
+# ── 의존성·캐시 ───────────────────────────────────────────────────
+.venv/
+backend/.venv/
+web/node_modules/
+node_modules/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ── 로그·점검 산출물·OS/에디터 ─────────────────────────────────────
+*.log
+npm-debug.log*
+playwright-report/
+test-results/
+*.png.tmp
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ── 비공개 문서·운영 설정 (로컬 전용, 공개 저장소 제외) ─────────────────
+CLAUDE.md
+gembti_v1.3_integrated_final_2026-10-24.md
+docs/
+deploy/

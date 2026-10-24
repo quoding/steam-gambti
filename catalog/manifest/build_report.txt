@@ -1,0 +1,49 @@
+GetTagList: ko 446 / en 446 tags; 20 target tags present
+seeds 4824, requested 4824, fetched 4824, failed 0, eligible 2393
+exclusion reasons: {"reviews_lt_500": 1678, "positive_lt_75": 460, "early_access": 448, "only_social_target_tags": 205, "no_ko_or_en": 104, "vr_only": 32, "unreleased": 9, "not_purchasable_kr": 8, "korean_status_unknown": 2, "no_target_tag": 2, "kr_store_not_visible": 1, "not_base_game": 1, "windows_not_confirmed": 1, "tags_missing": 1}
+ILP status: Optimal
+  [OK] slot G01/small == 9
+  [OK] slot G01/mid == 18
+  [OK] slot G01/large == 9
+  [OK] korean G01 >= 18 (got 18)
+  [OK] slot G02/small == 9
+  [OK] slot G02/mid == 18
+  [OK] slot G02/large == 9
+  [OK] korean G02 >= 18 (got 24)
+  [OK] slot G03/small == 9
+  [OK] slot G03/mid == 18
+  [OK] slot G03/large == 9
+  [OK] korean G03 >= 18 (got 18)
+  [OK] slot G04/small == 8
+  [OK] slot G04/mid == 16
+  [OK] slot G04/large == 8
+  [OK] korean G04 >= 16 (got 22)
+  [OK] slot G05/small == 10
+  [OK] slot G05/mid == 20
+  [OK] slot G05/large == 10
+  [OK] korean G05 >= 20 (got 20)
+  [OK] slot G06/small == 7
+  [OK] slot G06/mid == 14
+  [OK] slot G06/large == 7
+  [OK] korean G06 >= 14 (got 20)
+  [OK] slot G07/small == 10
+  [OK] slot G07/mid == 20
+  [OK] slot G07/large == 10
+  [OK] korean G07 >= 20 (got 20)
+  [OK] slot G08/small == 7
+  [OK] slot G08/mid == 14
+  [OK] slot G08/large == 7
+  [OK] korean G08 >= 14 (got 14)
+  [OK] slot G11/small == 6
+  [OK] slot G11/mid == 15
+  [OK] slot G11/large == 3
+  [OK] korean G11 >= 12 (got 15)
+  [OK] coop >= 40 (got 61)
+  [OK] pvp >= 40 (got 40)
+  [OK] series <= 2 (max 2)
+  [OK] developer <= 6 (max 6)
+  [OK] total == 300
+  [OK] unique appids
+  [OK] no exclusion reasons
+  [OK] korean status known
+staging snapshot: var/staging/cat-2026-10-24a-20261024191425.db

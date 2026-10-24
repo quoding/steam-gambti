@@ -1,0 +1,115 @@
+{
+  "type_mapping_version": "v1.3",
+  "min_independent_evidence": 3,
+  "min_positive_tags": 3,
+  "types": [
+    {
+      "type_id": "T01",
+      "name": "거점 운영자",
+      "combo_groups": [
+        "G03",
+        "G04"
+      ],
+      "tagline": "내가 만든 공간이 점점 더 잘 돌아갈 때 즐거워요."
+    },
+    {
+      "type_id": "T02",
+      "name": "야생 원정대장",
+      "combo_groups": [
+        "G01",
+        "G08"
+      ],
+      "tagline": "낯선 곳을 누비며 필요한 것을 마련하고 버텨요."
+    },
+    {
+      "type_id": "T03",
+      "name": "매판 조합 연구가",
+      "combo_groups": [
+        "G02",
+        "G11"
+      ],
+      "tagline": "새로운 도전마다 카드 조합을 다르게 완성해요."
+    },
+    {
+      "type_id": "T04",
+      "name": "이야기 속 단서 수집가",
+      "combo_groups": [
+        "G06",
+        "G07"
+      ],
+      "tagline": "사건을 따라가며 흩어진 답을 찾아요."
+    },
+    {
+      "type_id": "T05",
+      "name": "지도 밖 여행자",
+      "top_group": "G01",
+      "tagline": "정해진 길 너머에 무엇이 있는지 궁금해요."
+    },
+    {
+      "type_id": "T06",
+      "name": "다시 출발하는 원정가",
+      "top_group": "G02",
+      "tagline": "한 번의 끝보다 다음 도전의 가능성이 더 끌려요."
+    },
+    {
+      "type_id": "T07",
+      "name": "가상 세계 운영자",
+      "top_group": "G03",
+      "tagline": "작동 원리를 익히고 흐름을 다듬는 일이 즐거워요."
+    },
+    {
+      "type_id": "T08",
+      "name": "차곡차곡 건축가",
+      "top_group": "G04",
+      "tagline": "아무것도 없던 곳이 내 공간으로 바뀌는 게 좋아요."
+    },
+    {
+      "type_id": "T09",
+      "name": "다음 수 설계자",
+      "top_group": "G05",
+      "tagline": "움직이기 전에 유리한 순서부터 그려봐요."
+    },
+    {
+      "type_id": "T10",
+      "name": "규칙 해독가",
+      "top_group": "G06",
+      "tagline": "잘 맞지 않던 조각이 딱 들어맞는 순간이 좋아요."
+    },
+    {
+      "type_id": "T11",
+      "name": "다음 장면 탐독가",
+      "top_group": "G07",
+      "tagline": "인물과 사건의 다음 이야기가 궁금해요."
+    },
+    {
+      "type_id": "T12",
+      "name": "자급자족 개척자",
+      "top_group": "G08",
+      "tagline": "필요한 것을 마련하며 내일을 준비해요."
+    },
+    {
+      "type_id": "T13",
+      "name": "함께 완주하는 길잡이",
+      "top_group": "G09",
+      "tagline": "같은 목표를 함께 끝냈을 때 가장 뿌듯해요."
+    },
+    {
+      "type_id": "T14",
+      "name": "승부의 추격자",
+      "top_group": "G10",
+      "tagline": "상대와 겨루며 나아진 실력을 확인하고 싶어요."
+    },
+    {
+      "type_id": "T15",
+      "name": "한 수의 카드 연구가",
+      "top_group": "G11",
+      "tagline": "손에 든 카드가 연결되어 상황을 바꾸는 게 좋아요."
+    }
+  ],
+  "discovering": {
+    "type_id": "DISCOVERING",
+    "name": "아직 발견 중",
+    "tagline": "지금 답변에서 확인된 취향부터 보여드릴게요. 모르는 항목은 아직 열어둘게요.",
+    "empty_text": "아직 확정된 태그가 없어요"
+  }
+}

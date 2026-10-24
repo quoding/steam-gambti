@@ -1,0 +1,10 @@
+{
+  "document": "v1.3",
+  "questionnaire_version": "v1.2",
+  "scoring_version": "v1.2",
+  "type_mapping_version": "v1.3",
+  "algorithm_version": "v1.2",
+  "tie_policy_version": "v1.0",
+  "experiment_protocol_version": "v1.3",
+  "catalog_policy_version": "v1.3.1"
+}

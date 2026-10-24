@@ -1,0 +1,255 @@
+{
+  "scoring_version": "v1.2",
+  "tags": [
+    {
+      "column": "T01",
+      "tagid": 1695,
+      "name_ko": "오픈 월드",
+      "name_en": "Open World",
+      "group_id": "G01",
+      "primary_q": "Q01",
+      "support_q": "Q02",
+      "direct": [
+        "Q01"
+      ]
+    },
+    {
+      "column": "T02",
+      "tagid": 3834,
+      "name_ko": "탐험",
+      "name_en": "Exploration",
+      "group_id": "G01",
+      "primary_q": "Q02",
+      "support_q": "Q01",
+      "direct": [
+        "Q02"
+      ]
+    },
+    {
+      "column": "T03",
+      "tagid": 1716,
+      "name_ko": "로그라이크",
+      "name_en": "Roguelike",
+      "group_id": "G02",
+      "joint": [
+        "Q03",
+        "Q04"
+      ],
+      "direct": [
+        "Q03"
+      ]
+    },
+    {
+      "column": "T04",
+      "tagid": 3959,
+      "name_ko": "로그라이트",
+      "name_en": "Roguelite",
+      "group_id": "G02",
+      "joint": [
+        "Q03",
+        "Q04"
+      ],
+      "direct": [
+        "Q03"
+      ]
+    },
+    {
+      "column": "T05",
+      "tagid": 599,
+      "name_ko": "시뮬레이션",
+      "name_en": "Simulation",
+      "group_id": "G03",
+      "primary_q": "Q05",
+      "support_q": "Q06",
+      "direct": [
+        "Q05"
+      ]
+    },
+    {
+      "column": "T06",
+      "tagid": 12472,
+      "name_ko": "경영",
+      "name_en": "Management",
+      "group_id": "G03",
+      "primary_q": "Q06",
+      "support_q": "Q05",
+      "direct": [
+        "Q06"
+      ]
+    },
+    {
+      "column": "T07",
+      "tagid": 1643,
+      "name_ko": "건설",
+      "name_en": "Building",
+      "group_id": "G04",
+      "primary_q": "Q07",
+      "support_q": "Q08",
+      "direct": [
+        "Q07"
+      ]
+    },
+    {
+      "column": "T08",
+      "tagid": 7332,
+      "name_ko": "기지 건설",
+      "name_en": "Base Building",
+      "group_id": "G04",
+      "primary_q": "Q08",
+      "support_q": "Q07",
+      "direct": [
+        "Q08"
+      ]
+    },
+    {
+      "column": "T09",
+      "tagid": 9,
+      "name_ko": "전략",
+      "name_en": "Strategy",
+      "group_id": "G05",
+      "primary_q": "Q09",
+      "support_q": "Q10",
+      "direct": [
+        "Q09"
+      ]
+    },
+    {
+      "column": "T10",
+      "tagid": 1741,
+      "name_ko": "턴제 전략",
+      "name_en": "Turn-Based Strategy",
+      "group_id": "G05",
+      "primary_q": "Q10",
+      "support_q": "Q09",
+      "direct": [
+        "Q10"
+      ]
+    },
+    {
+      "column": "T11",
+      "tagid": 1664,
+      "name_ko": "퍼즐",
+      "name_en": "Puzzle",
+      "group_id": "G06",
+      "primary_q": "Q11",
+      "support_q": "Q12",
+      "direct": [
+        "Q11"
+      ]
+    },
+    {
+      "column": "T12",
+      "tagid": 6129,
+      "name_ko": "논리",
+      "name_en": "Logic",
+      "group_id": "G06",
+      "primary_q": "Q12",
+      "support_q": "Q11",
+      "direct": [
+        "Q12"
+      ]
+    },
+    {
+      "column": "T13",
+      "tagid": 1742,
+      "name_ko": "풍부한 스토리",
+      "name_en": "Story Rich",
+      "group_id": "G07",
+      "primary_q": "Q13",
+      "support_q": "Q14",
+      "direct": [
+        "Q13"
+      ]
+    },
+    {
+      "column": "T14",
+      "tagid": 6426,
+      "name_ko": "선택의 중요성",
+      "name_en": "Choices Matter",
+      "group_id": "G07",
+      "primary_q": "Q14",
+      "support_q": "Q13",
+      "direct": [
+        "Q14"
+      ]
+    },
+    {
+      "column": "T15",
+      "tagid": 1662,
+      "name_ko": "생존",
+      "name_en": "Survival",
+      "group_id": "G08",
+      "primary_q": "Q15",
+      "support_q": "Q16",
+      "direct": [
+        "Q15"
+      ]
+    },
+    {
+      "column": "T16",
+      "tagid": 1702,
+      "name_ko": "크래프팅",
+      "name_en": "Crafting",
+      "group_id": "G08",
+      "primary_q": "Q16",
+      "support_q": "Q15",
+      "direct": [
+        "Q16"
+      ]
+    },
+    {
+      "column": "T17",
+      "tagid": 1685,
+      "name_ko": "협동",
+      "name_en": "Co-op",
+      "group_id": "G09",
+      "joint": [
+        "Q17",
+        "Q18"
+      ],
+      "direct": [
+        "Q17",
+        "Q18"
+      ]
+    },
+    {
+      "column": "T18",
+      "tagid": 1775,
+      "name_ko": "PvP",
+      "name_en": "PvP",
+      "group_id": "G10",
+      "joint": [
+        "Q17",
+        "Q18"
+      ],
+      "direct": [
+        "Q17",
+        "Q18"
+      ]
+    },
+    {
+      "column": "T19",
+      "tagid": 32322,
+      "name_ko": "덱빌딩",
+      "name_en": "Deckbuilding",
+      "group_id": "G11",
+      "primary_q": "Q19",
+      "support_q": "Q20",
+      "direct": [
+        "Q19"
+      ]
+    },
+    {
+      "column": "T20",
+      "tagid": 1666,
+      "name_ko": "카드 게임",
+      "name_en": "Card Game",
+      "group_id": "G11",
+      "primary_q": "Q20",
+      "support_q": "Q19",
+      "direct": [
+        "Q20"
+      ]
+    }
+  ]
+}
