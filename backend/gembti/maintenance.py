@@ -36,10 +36,15 @@ def _shred(path: Path) -> None:
 
 
 def _texts(con: sqlite3.Connection) -> list[str]:
-    try:
-        return [r[0] for r in con.execute("SELECT text FROM free_texts")]
-    except sqlite3.OperationalError:
-        return []
+    """백업에 남으면 안 되는 원문: 서술·v2 서술·SteamID·라이브러리 게임 이름+시간 조합 표식."""
+    out: list[str] = []
+    for sql in ("SELECT text FROM free_texts", "SELECT text FROM v2_free_texts",
+                "SELECT steamid FROM v2_library_links", "SELECT payload_json FROM v2_library_cache"):
+        try:
+            out += [r[0] for r in con.execute(sql) if r[0]]
+        except sqlite3.OperationalError:
+            pass
+    return out
 
 
 def make_safe_copy(src: sqlite3.Connection, dest: Path) -> dict:
@@ -52,7 +57,10 @@ def make_safe_copy(src: sqlite3.Connection, dest: Path) -> dict:
     with t:
         src.backup(t)
     t.execute("PRAGMA secure_delete = ON")
-    t.execute("DELETE FROM free_texts")
+    existing = {r[0] for r in t.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    for tbl in db.PRIVATE_TABLES:
+        if tbl in existing:
+            t.execute(f"DELETE FROM {tbl}")
     t.execute(f"CREATE TABLE IF NOT EXISTS {BACKUP_META} (key TEXT PRIMARY KEY, value TEXT)")
     t.execute(f"INSERT OR REPLACE INTO {BACKUP_META} VALUES ('free_texts', 'removed'), ('created_at', ?)",
               (time.strftime("%Y-%m-%dT%H:%M:%S%z"),))
@@ -69,7 +77,8 @@ def make_safe_copy(src: sqlite3.Connection, dest: Path) -> dict:
 def verify_safe_copy(path: Path, originals: list[str]) -> dict:
     c = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
     chk = c.execute("PRAGMA integrity_check").fetchone()[0]
-    n = c.execute("SELECT COUNT(*) FROM free_texts").fetchone()[0]
+    tables = {r[0] for r in c.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    n = sum(c.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0] for t in db.PRIVATE_TABLES if t in tables)
     meta = dict(c.execute(f"SELECT key, value FROM {BACKUP_META}").fetchall())
     c.close()
     raw = path.read_bytes()
@@ -159,6 +168,9 @@ def restore(path: Path) -> None:
         raise SystemExit("복구 대상 손상")
     c.execute("PRAGMA secure_delete = ON")
     expired = purge_expired_free_texts(c)
+    if c.execute("SELECT 1 FROM sqlite_master WHERE name = 'v2_library_links'").fetchone():
+        from gembti.v2.store import purge_v2
+        purge_v2(c)  # 만료된 라이브러리·v2 서술이 복원으로 되살아나지 않게
     c.execute(f"DROP TABLE IF EXISTS {BACKUP_META}")
     c.commit()
     c.close()
@@ -193,6 +205,8 @@ def main() -> None:
         db.migrate(con)
         print(f"만료 서술 삭제: {purge_expired_free_texts(con)}건")
         print(f"실험 사본 정리: {purge_experiment_copies(con)}")
+        from gembti.v2.store import purge_v2
+        print(f"v2 만료 정리(라이브러리 7일·캐시 24시간·서술 30일): {purge_v2(con)}")
         con.close()
     elif args.cmd == "convert-backups":
         print("\n".join(convert_existing()) or "변환할 원문 포함 백업 없음")

@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import json
+import os
 import threading
 import time
 from collections import defaultdict, deque
@@ -36,6 +37,7 @@ app = FastAPI(title="gembti", lifespan=lifespan, docs_url=None, redoc_url=None, 
 # ---------------------------------------------------------------- 요청 크기·빈도 제한
 
 _hits: dict[str, deque] = defaultdict(deque)
+LIGHT_PATHS = {"/api/v2/route", "/api/v2/library/status"}
 _lock = threading.Lock()
 
 
@@ -50,15 +52,20 @@ def client_ip(request: Request) -> str:
 async def limits(request: Request, call_next):
     if request.method in ("POST", "PUT", "DELETE"):
         cl = request.headers.get("content-length")
-        if cl is None or not cl.isdigit() or int(cl) > config.MAX_BODY_BYTES:
+        if cl is None or not cl.isdigit():
+            return JSONResponse({"error": "length_required"}, status_code=411)
+        if int(cl) > config.MAX_BODY_BYTES:
             return JSONResponse({"error": "request_too_large"}, status_code=413)
-        key = client_ip(request)
+        # v2 문항 이동·라이브러리 상태 조회는 쓰기 없이 자주 호출되므로 별도 한도
+        light = request.url.path in LIGHT_PATHS
+        key = ("light:" if light else "") + client_ip(request)
+        limit = config.RATE_LIMIT_PER_MINUTE * 4 if light else config.RATE_LIMIT_PER_MINUTE
         now = time.monotonic()
         with _lock:
             q = _hits[key]
             while q and now - q[0] > 60:
                 q.popleft()
-            if len(q) >= config.RATE_LIMIT_PER_MINUTE:
+            if len(q) >= limit:
                 return JSONResponse({"error": "rate_limited"}, status_code=429, headers={"Retry-After": "30"})
             q.append(now)
     return await call_next(request)
@@ -222,3 +229,8 @@ def delete(submission_id: str, body: OwnerIn):
 
 
 app.include_router(evaluation.router)
+
+if os.environ.get("GEMBTI_V2_ENABLED", "1") == "1":  # v2 기능 플래그 (v1 경로와 분리)
+    from gembti.v2.api import router as v2_router
+
+    app.include_router(v2_router)

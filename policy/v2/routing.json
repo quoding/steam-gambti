@@ -1,0 +1,20 @@
+{
+ "routing_version": "v2.0",
+ "explore_count": 12,
+ "confirm_families": 4,
+ "questions_per_family": 2,
+ "extra_sets_max": 2,
+ "extra_set_size": 2,
+ "base_total": 20,
+ "max_total": 24,
+ "interest_slots": 3,
+ "explore_slot": 1,
+ "max_social_in_initial": 1,
+ "tie": "흥미 점수 내림차순 → 결정적 해시(gembti-route-v2|routing_version|탐색 canonical|Gxx) 오름차순. 고정 ID 우선순위 없음.",
+ "extra_priority": [
+  "n1_with_x: 한 문항이 X라 n<2인 태그 중 다른 1문항이 양수",
+  "conditional: 상반된 태그",
+  "unexplored_family: 미조사 계열의 차순위 태그(2문항)"
+ ],
+ "stop_rule": "20문항 후 정규 카드 조건(positive≥3, 독립 계열≥3) 충족 또는 추가 후보가 없으면 종료. 최대 24문항."
+}

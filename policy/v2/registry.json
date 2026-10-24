@@ -1,0 +1,243 @@
+{
+ "registry_version": "v2.0",
+ "note": "G01~G11은 v1 의미 보존, G12~G16 신규. tagid·이름은 2026-10-24 GetTagList(ko/en) 원본과 대조.",
+ "families": [
+  {
+   "family_id": "G01",
+   "name": "자유로운 세계·발견",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1695,
+     "name_ko": "오픈 월드",
+     "name_en": "Open World"
+    },
+    {
+     "tagid": 3834,
+     "name_ko": "탐험",
+     "name_en": "Exploration"
+    }
+   ]
+  },
+  {
+   "family_id": "G02",
+   "name": "반복 도전",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1716,
+     "name_ko": "로그라이크",
+     "name_en": "Roguelike"
+    },
+    {
+     "tagid": 3959,
+     "name_ko": "로그라이트",
+     "name_en": "Roguelite"
+    }
+   ]
+  },
+  {
+   "family_id": "G03",
+   "name": "현실 재현·운영",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 599,
+     "name_ko": "시뮬레이션",
+     "name_en": "Simulation"
+    },
+    {
+     "tagid": 12472,
+     "name_ko": "경영",
+     "name_en": "Management"
+    }
+   ]
+  },
+  {
+   "family_id": "G04",
+   "name": "공간·거점 만들기",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1643,
+     "name_ko": "건설",
+     "name_en": "Building"
+    },
+    {
+     "tagid": 7332,
+     "name_ko": "기지 건설",
+     "name_en": "Base Building"
+    }
+   ]
+  },
+  {
+   "family_id": "G05",
+   "name": "계획·차례",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 9,
+     "name_ko": "전략",
+     "name_en": "Strategy"
+    },
+    {
+     "tagid": 1741,
+     "name_ko": "턴제 전략",
+     "name_en": "Turn-Based Strategy"
+    }
+   ]
+  },
+  {
+   "family_id": "G06",
+   "name": "문제 해결·추론",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1664,
+     "name_ko": "퍼즐",
+     "name_en": "Puzzle"
+    },
+    {
+     "tagid": 6129,
+     "name_ko": "논리",
+     "name_en": "Logic"
+    }
+   ]
+  },
+  {
+   "family_id": "G07",
+   "name": "이야기·선택",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1742,
+     "name_ko": "풍부한 스토리",
+     "name_en": "Story Rich"
+    },
+    {
+     "tagid": 6426,
+     "name_ko": "선택의 중요성",
+     "name_en": "Choices Matter"
+    }
+   ]
+  },
+  {
+   "family_id": "G08",
+   "name": "버티기·제작",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1662,
+     "name_ko": "생존",
+     "name_en": "Survival"
+    },
+    {
+     "tagid": 1702,
+     "name_ko": "크래프팅",
+     "name_en": "Crafting"
+    }
+   ]
+  },
+  {
+   "family_id": "G09",
+   "name": "함께 목표 달성",
+   "social": true,
+   "tags": [
+    {
+     "tagid": 1685,
+     "name_ko": "협동",
+     "name_en": "Co-op"
+    }
+   ]
+  },
+  {
+   "family_id": "G10",
+   "name": "사람과 경쟁",
+   "social": true,
+   "tags": [
+    {
+     "tagid": 1775,
+     "name_ko": "PvP",
+     "name_en": "PvP"
+    }
+   ]
+  },
+  {
+   "family_id": "G11",
+   "name": "카드 구성·사용",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 32322,
+     "name_ko": "덱빌딩",
+     "name_en": "Deckbuilding"
+    },
+    {
+     "tagid": 1666,
+     "name_ko": "카드 게임",
+     "name_en": "Card Game"
+    }
+   ]
+  },
+  {
+   "family_id": "G12",
+   "name": "조준과 발사",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1774,
+     "name_ko": "슈팅",
+     "name_en": "Shooter"
+    }
+   ]
+  },
+  {
+   "family_id": "G13",
+   "name": "긴장과 공포",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1667,
+     "name_ko": "공포",
+     "name_en": "Horror"
+    }
+   ]
+  },
+  {
+   "family_id": "G14",
+   "name": "박자 맞추기",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1752,
+     "name_ko": "리듬",
+     "name_en": "Rhythm"
+    }
+   ]
+  },
+  {
+   "family_id": "G15",
+   "name": "차량 경주",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 699,
+     "name_ko": "레이싱",
+     "name_en": "Racing"
+    }
+   ]
+  },
+  {
+   "family_id": "G16",
+   "name": "점프와 발판 이동",
+   "social": false,
+   "tags": [
+    {
+     "tagid": 1625,
+     "name_ko": "플랫폼",
+     "name_en": "Platformer"
+    }
+   ]
+  }
+ ]
+}

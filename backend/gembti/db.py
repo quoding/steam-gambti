@@ -84,7 +84,60 @@ MIGRATIONS: list[str] = [
     """
     ALTER TABLE eval_sessions ADD COLUMN awkward_json TEXT
     """,
+    # 3: v2 (분기형 질문·라이브러리·리뷰 필터). v1 테이블과 분리.
+    """
+    CREATE TABLE v2_sessions (
+      session_key TEXT PRIMARY KEY, owner_key_hash TEXT NOT NULL, created_at TEXT NOT NULL, last_seen TEXT NOT NULL
+    );
+    CREATE TABLE v2_library_links (
+      session_key TEXT PRIMARY KEY REFERENCES v2_sessions(session_key) ON DELETE CASCADE,
+      steamid TEXT NOT NULL, steamid_hash TEXT NOT NULL, status TEXT NOT NULL, error_code TEXT,
+      linked_at TEXT NOT NULL, expires_at TEXT NOT NULL, fetched_at TEXT,
+      use_for_reco INTEGER NOT NULL DEFAULT 1, exclude_owned INTEGER NOT NULL DEFAULT 1,
+      meta_status TEXT, profile_json TEXT, profile_hash TEXT, snapshot_id TEXT
+    );
+    CREATE TABLE v2_library_games (
+      session_key TEXT NOT NULL REFERENCES v2_sessions(session_key) ON DELETE CASCADE,
+      appid INTEGER NOT NULL, name TEXT, minutes INTEGER, minutes_2w INTEGER, info_status TEXT NOT NULL,
+      analysis_excluded INTEGER NOT NULL DEFAULT 0,
+      PRIMARY KEY (session_key, appid)
+    );
+    CREATE TABLE v2_library_cache (
+      steamid_hash TEXT PRIMARY KEY, payload_json TEXT NOT NULL, status TEXT NOT NULL, fetched_at TEXT NOT NULL
+    );
+    CREATE TABLE v2_game_meta (
+      appid INTEGER PRIMARY KEY, name TEXT, tags_json TEXT, status TEXT NOT NULL, fetched_at TEXT NOT NULL
+    );
+    CREATE TABLE v2_submissions (
+      submission_id TEXT PRIMARY KEY, session_key TEXT NOT NULL, session_id_v2 TEXT NOT NULL,
+      owner_key_hash TEXT NOT NULL, versions_json TEXT NOT NULL, answers_json TEXT NOT NULL, path_json TEXT NOT NULL,
+      dropped_json TEXT NOT NULL, card_json TEXT NOT NULL, tags_json TEXT NOT NULL,
+      experiment_consent INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL
+    );
+    CREATE INDEX idx_v2_submissions_sid ON v2_submissions(session_id_v2);
+    CREATE TABLE v2_free_texts (
+      submission_id TEXT NOT NULL REFERENCES v2_submissions(submission_id) ON DELETE CASCADE,
+      free_text_id TEXT NOT NULL, text TEXT NOT NULL, expires_at TEXT NOT NULL,
+      PRIMARY KEY (submission_id, free_text_id)
+    );
+    CREATE TABLE v2_rec_requests (
+      submission_id TEXT NOT NULL REFERENCES v2_submissions(submission_id) ON DELETE CASCADE,
+      request_no INTEGER NOT NULL, filters_json TEXT NOT NULL, library_json TEXT NOT NULL,
+      snapshot_id TEXT NOT NULL, recommendation_version TEXT NOT NULL, repro_key TEXT NOT NULL,
+      summary_json TEXT NOT NULL, created_at TEXT NOT NULL,
+      PRIMARY KEY (submission_id, request_no)
+    );
+    CREATE TABLE v2_recommendations (
+      submission_id TEXT NOT NULL REFERENCES v2_submissions(submission_id) ON DELETE CASCADE,
+      request_no INTEGER NOT NULL, rank INTEGER NOT NULL, appid INTEGER NOT NULL, kind TEXT NOT NULL,
+      detail_json TEXT NOT NULL,
+      PRIMARY KEY (submission_id, request_no, rank)
+    );
+    """,
 ]
+
+# 백업 사본에서 제거하는 개인 원문 테이블 (서술·라이브러리·SteamID)
+PRIVATE_TABLES = ("free_texts", "v2_free_texts", "v2_library_links", "v2_library_games", "v2_library_cache")
 
 
 def connect(path: Path | None = None) -> sqlite3.Connection:

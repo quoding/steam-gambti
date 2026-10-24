@@ -12,6 +12,7 @@ import argparse
 import csv
 import re
 import time
+from pathlib import Path
 from urllib.parse import urlencode
 
 from gembti.collector.steam_client import SteamClient
@@ -35,40 +36,44 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--per-tag", type=int, default=300, help="정렬 방식마다 태그당 가져올 결과 수")
     ap.add_argument("--sorts", default="Reviews_DESC,", help="쉼표 구분; 빈 값은 상점 기본(관련도) 정렬")
+    ap.add_argument("--tagids", help="쉼표 구분 tagid (기본: v1 판정 태그 20개)")
+    ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
+    out_path = Path(args.out)
 
     policy = load_policy()
+    tagids = [int(t) for t in args.tagids.split(",")] if args.tagids else [t.tagid for t in policy.tags]
     existing: dict[int, dict] = {}
-    if OUT.exists():
-        with OUT.open() as f:
+    if out_path.exists():
+        with out_path.open() as f:
             for row in csv.DictReader(f):
                 existing[int(row["appid"])] = row
     client = SteamClient()
     found = dict(existing)
-    for tag in policy.tags:
+    for tagid in tagids:
         for sort in args.sorts.split(","):
             for start in range(0, args.per_tag, 100):
-                url, params = search_url(tag.tagid, sort, start, 100)
+                url, params = search_url(tagid, sort, start, 100)
                 res = client.get_json(url, params)
                 if not res.ok or res.data is None:
-                    print(f"[warn] tag {tag.tagid} sort={sort!r} start={start}: {res.error}")
+                    print(f"[warn] tag {tagid} sort={sort!r} start={start}: {res.error}")
                     break
                 ids = APPID_RE.findall(res.data.get("results_html", ""))
                 for a in ids:
                     a = int(a)
                     if a not in found:
                         found[a] = {"appid": a, "source": f"{url}?{urlencode(params)}",
-                                    "source_tagid": tag.tagid, "found_at": res.fetched_at}
-                print(f"tag {tag.tagid} sort={sort or 'relevance'} start={start}: {len(ids)} ids, total {len(found)}")
+                                    "source_tagid": tagid, "found_at": res.fetched_at}
+                print(f"tag {tagid} sort={sort or 'relevance'} start={start}: {len(ids)} ids, total {len(found)}")
                 if len(ids) < 100:
                     break
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    with OUT.open("w", newline="") as f:
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with out_path.open("w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["appid", "source", "source_tagid", "found_at"])
         w.writeheader()
         for a in sorted(found):
             w.writerow(found[a])
-    print(f"wrote {len(found)} candidates -> {OUT} at {time.strftime('%F %T')}")
+    print(f"wrote {len(found)} candidates -> {out_path} at {time.strftime('%F %T')}")
 
 
 if __name__ == "__main__":

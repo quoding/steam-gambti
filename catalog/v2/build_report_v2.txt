@@ -1,0 +1,8 @@
+후보 5933, 리뷰 요약 rp2 Steam 구매 3634 · 전체 구매 342, 적격 2456
+제외 사유: {"review_summary_unavailable": 2299, "early_access": 534, "content_review_pending": 349, "v2_excluded_purchase_scope": 341, "v2_reviews_lt_500": 168, "v2_positive_lt_75": 139, "no_ko_or_en": 112, "vr_only": 68, "unreleased": 10, "not_purchasable_kr": 9, "korean_status_unknown": 2, "no_target_tag": 2, "content_excluded": 2, "kr_store_not_visible": 1, "not_base_game": 1, "windows_not_confirmed": 1, "tags_missing": 1, "content_hold": 1}
+GetItems로는 통과·Steam 구매 기준 하한 미달: 1개 / 그중 전체 구매 기준은 충족(구매 범위 제외): 341개
+ILP status: Optimal
+계열별 적격 게임(W≥0.3): {"G01": 751, "G02": 390, "G03": 755, "G04": 355, "G05": 678, "G06": 489, "G07": 729, "G08": 383, "G09": 409, "G10": 207, "G11": 255, "G12": 249, "G13": 297, "G14": 80, "G15": 175, "G16": 291}
+선정 1000개 (상한 1000) · 검증 오류 없음
+검증 보고: {"games": 1000, "korean_ratio": 0.5, "coop": 150, "pvp": 47, "max_series": 2, "max_developer": 6, "family_coverage": {"G01": 294, "G02": 110, "G03": 263, "G04": 104, "G05": 192, "G06": 279, "G07": 344, "G08": 110, "G09": 113, "G10": 40, "G11": 49, "G12": 98, "G13": 142, "G14": 31, "G15": 30, "G16": 147}, "coverage_gate": "pass"}
+staging snapshot: var/staging/cat-v2-20261025015614.db
