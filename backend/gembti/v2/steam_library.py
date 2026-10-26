@@ -16,6 +16,8 @@ from urllib.parse import urlparse
 
 import httpx
 
+import gembti.config  # noqa: F401  루트 .env 로드(STEAM_WEB_API_KEY)
+
 API = "https://api.steampowered.com"
 TIMEOUT_S = 20.0
 BACKOFF_S = (5, 15, 45)

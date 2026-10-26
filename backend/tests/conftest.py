@@ -1,3 +1,7 @@
+import os
+
+os.environ["STEAM_WEB_API_KEY"] = ""  # 테스트는 루트 .env의 실제 키를 쓰지 않는다
+
 import socket
 
 import pytest
