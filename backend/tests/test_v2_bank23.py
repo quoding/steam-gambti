@@ -12,7 +12,7 @@ from tests.test_v2_api import session, v2env, walk  # noqa: F401  (픽스처 재
 
 P = get_v2("v2.3")
 P22 = get_v2("v2.2")
-DOC = Path(__file__).resolve().parents[2] / "GEMBTI_QUESTION_BANK_v2.3.md"
+DOC = Path(__file__).resolve().parents[2] / "docs" / "source" / "GEMBTI_QUESTION_BANK_v2.3.md"
 
 
 @pytest.mark.skipif(not DOC.exists(), reason="비공개 문서가 없는 환경")

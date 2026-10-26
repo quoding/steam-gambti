@@ -10,7 +10,7 @@ from gembti.v2.policy import BANKS, active_version, get_v2, load_v2
 from tests.test_v2_api import session, v2env, walk  # noqa: F401  (픽스처 재사용)
 
 P = get_v2("v2.2")
-DOC = Path(__file__).resolve().parents[2] / "GEMBTI_QUESTION_BANK_v2.2.md"
+DOC = Path(__file__).resolve().parents[2] / "docs" / "source" / "GEMBTI_QUESTION_BANK_v2.2.md"
 
 
 def run(p, ex, cf):

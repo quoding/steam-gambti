@@ -1,7 +1,7 @@
 """질문지 문서(GEMBTI_QUESTION_BANK_v2.2.md)의 표를 그대로 기계 설정으로 옮긴다 (문구 요약·수정 없음).
 
-사용(backend/): uv run python -m gembti.v2.import_bank ../GEMBTI_QUESTION_BANK_v2.2.md ../policy/v2/banks/v2.2
-      uv run python -m gembti.v2.import_bank ../GEMBTI_QUESTION_BANK_v2.3.md ../policy/v2/banks/v2.3  (형식이 달라 parse_v23)
+사용(backend/): uv run python -m gembti.v2.import_bank ../docs/source/GEMBTI_QUESTION_BANK_v2.2.md ../policy/v2/banks/v2.2
+      uv run python -m gembti.v2.import_bank ../docs/source/GEMBTI_QUESTION_BANK_v2.3.md ../policy/v2/banks/v2.3  (형식이 달라 parse_v23)
 출력: explore.json, confirm.json. 버전·분기 설정(versions.json, routing.json)은 손으로 관리한다.
 """
 from __future__ import annotations

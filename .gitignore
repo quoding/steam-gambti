@@ -70,8 +70,5 @@ Thumbs.db
 
 # ── 비공개 문서·운영 설정 (로컬 전용, 공개 저장소 제외) ─────────────────
 CLAUDE.md
-gembti_v1.3_integrated_final_2026-10-24.md
 docs/
 deploy/
-GEMBTI_V2_CLAUDE_CODE_HANDOFF.md
-GEMBTI_QUESTION_BANK_v*.md
