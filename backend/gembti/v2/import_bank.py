@@ -13,6 +13,14 @@ from pathlib import Path
 BANK_VERSION = "2026-10-26-r1"
 QUESTIONNAIRE_VERSION = "v2.2"
 ROLE = {"기본 직접 근거": "primary", "예비 직접 근거": "reserve"}
+# 의미가 바뀌지 않는 명백한 띄어쓰기·오탈자 정정(2026-10-26 사용자 승인). 원문 → 정정. 문서 원본은 그대로 둔다.
+ERRATA = {"질문은20~24개이며": "질문은 20~24개이며"}
+
+
+def _fix(text: str) -> str:
+    for a, b in ERRATA.items():
+        text = text.replace(a, b)
+    return text
 
 
 def _quoted(line: str) -> str:
@@ -37,7 +45,7 @@ def _rows(block: str) -> list[list[str]]:
 
 def parse(md: str) -> tuple[dict, dict]:
     intro_block = _section(md, "### 3.1 시작 안내", "### 3.2")
-    intro = [_quoted(x) for x in intro_block.splitlines() if x.startswith("“")]
+    intro = [_fix(_quoted(x)) for x in intro_block.splitlines() if x.startswith("“")]
     nx_block = _section(md, "### 3.2 탐색 공통 선택 방법", "### 3.3")
     n_label = re.search(r"공통 N: “(.+?)”", nx_block).group(1)  # type: ignore[union-attr]
     x_label = re.search(r"공통 X: “(.+?)”", nx_block).group(1)  # type: ignore[union-attr]
@@ -53,10 +61,10 @@ def parse(md: str) -> tuple[dict, dict]:
     for m in re.finditer(r"^### (E\d\d)\. (.+)$", ex_block, re.MULTILINE):
         qid, text = m.group(1), m.group(2).strip()
         body = ex_block[m.end():].split("\n### ")[0]
-        opts = [{"code": c, "label": lab, "family_id": f, "tag_hint": int(t)} for c, lab, f, t in _rows(body)]
+        opts = [{"code": c, "label": _fix(lab), "family_id": f, "tag_hint": int(t)} for c, lab, f, t in _rows(body)]
         opts += [{"code": "N", "label": n_label, "family_id": None, "tag_hint": None},
                  {"code": "X", "label": x_label, "family_id": None, "tag_hint": None}]
-        explore_qs.append({"question_id": qid, "text": text, "max_select": 2, "exclusive_codes": ["N", "X"],
+        explore_qs.append({"question_id": qid, "text": _fix(text), "max_select": 2, "exclusive_codes": ["N", "X"],
                            "options": opts})
 
     confirm_qs = []
@@ -68,9 +76,9 @@ def parse(md: str) -> tuple[dict, dict]:
         dist = re.search(r"\*\*가까운 취향과 구별:\*\* (.+)", body).group(1).strip()  # type: ignore[union-attr]
         for qid, text, role in _rows(body):
             confirm_qs.append({"question_id": qid, "tagid": tagid, "family_id": fid, "role": ROLE[role],
-                               "text": text, "intent": intent, "distinguish": dist})
+                               "text": _fix(text), "intent": intent, "distinguish": dist})
     explore = {"questionnaire_version": QUESTIONNAIRE_VERSION, "bank_version": BANK_VERSION, "stage": "explore",
-               "source": "GEMBTI_QUESTION_BANK_v2.2.md §3.1·3.2·5", "intro": "\n\n".join(intro),
+               "source": "GEMBTI_QUESTION_BANK_v2.2.md §3.1·3.2·5", "errata": ERRATA, "intro": "\n\n".join(intro),
                "note": "분기 선택 전용. 선택 하나는 연결 계열 탐색 +1, 연결 tagid 선택 +1. N/X·비선택은 점수 없음.",
                "questions": explore_qs}
     confirm = {"questionnaire_version": QUESTIONNAIRE_VERSION, "bank_version": BANK_VERSION, "stage": "confirm",

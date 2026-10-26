@@ -263,6 +263,7 @@ def submit(body: SubmitIn):
             store.purge_v2(con)
             route_log = {k: getattr(j.route, k) for k in ("initial_families", "interest_families",
                                                           "explore_slot_family", "chosen_tags", "extra_sets")}
+            route_log["dropped"] = j.dropped  # 경로 변경으로 빠진 문항 ID만(응답 원문은 저장하지 않음)
             con.execute("INSERT INTO v2_submissions (submission_id, session_key, session_id_v2, owner_key_hash, "
                         "versions_json, answers_json, path_json, dropped_json, card_json, tags_json, "
                         "experiment_consent, created_at, route_json) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", (

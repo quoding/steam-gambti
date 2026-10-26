@@ -58,7 +58,8 @@ def render() -> str:
                         f"{r['max_total'] - r['base_total']}문항. 노출 {r['base_total']}~{r['max_total']}개."),
                        f"- 상위 계열: {r['family_tie']}", f"- 탐색 슬롯: {r['slot']}", f"- 계열 안의 태그: {r['tag_pick']}",
                        f"- 최초 순서: {r['initial_order']}", f"- 추가 조건: {r['extra_trigger']}",
-                       "- 추가 우선순위: " + " / ".join(r["extra_priority"]), f"- 해석: {r['interpretation']}",
+                       "- 추가 우선순위: " + " / ".join(r["extra_priority"]), f"- 예비 문항 뒤 종료: {r['stop_after_reserve']}",
+                       f"- 빠진 응답: {r['dropped_answers']}",
                        f"- 종료: {r['stop_rule']}"]
     else:
         route_lines = [

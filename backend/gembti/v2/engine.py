@@ -215,7 +215,7 @@ def route_v22(p: V2Policy, answers: dict) -> Route:
     chosen = top + [slot]
     tags = {f: _pick_tag_v22(p, rhash, f, sel, exp) for f in chosen}
     path += [f"C{tags[f]}_1" for f in chosen] + [f"C{tags[f]}_2" for f in chosen]
-    base = Route(path, None, chosen, [f for f in top if fam_int.get(f, 0) > 0], slot, dict(tags), stage="confirm")
+    base = Route(path, None, chosen, [f for f in top if fam_int.get(f, 0) > 0], slot, tags, stage="confirm")
     for qid in path[len(p.explore_ids):]:
         if norm_confirm(p, answers.get(qid)) is None:
             base.next_question = qid

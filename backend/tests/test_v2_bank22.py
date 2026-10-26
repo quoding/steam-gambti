@@ -136,3 +136,41 @@ def test_attempt_version_pinning(v2env):  # noqa: F811
     assert v["card"] == sub["card"]  # 과거 제출은 자기 은행으로 조회
     assert set(BANKS) == {"v2.0", "v2.2"}
     con.close()
+
+
+def _base(p, conf):
+    a = {q: ["A"] for q in p.explore_ids}
+    r = route(p, a)
+    for q in r.path[12:]:
+        a[q] = conf
+    return a, r
+
+
+def test_regular_card_stops_after_one_reserve_without_new_family():
+    """정규 카드 충족 + 상위 계열 태그 conditional → _3 1회 뒤 종료, 새 계열 없음, 상태 유지."""
+    a, r = _base(P, "A")
+    assert route(P, a).done and len(route(P, a).path) == 20  # 모두 긍정이면 20에서 종료
+    t = r.chosen_tags[r.initial_families[0]]
+    a[f"C{t}_2"] = "D"
+    r2 = route(P, a)
+    assert r2.extra_sets == [[f"C{t}_3"]]
+    a[f"C{t}_3"] = "A"
+    r3 = route(P, a)
+    assert r3.done and len(r3.path) == 21 and set(r3.chosen_tags) == set(r.chosen_tags)
+    assert judge_v2(P, a).tags[t].state == "conditional"
+
+
+def test_regular_card_unknown_top_tag_keeps_unknown():
+    a, r = _base(P, "A")
+    t = r.chosen_tags[r.initial_families[0]]
+    a[f"C{t}_2"] = "X"
+    a[f"C{t}_3"] = "X"
+    r3 = route(P, a)
+    assert r3.done and len(r3.path) == 21 and judge_v2(P, a).tags[t].state == "unknown"
+
+
+def test_card_unmet_opens_new_family_with_budget():
+    a, r = _base(P, "C")  # 모두 중립 → 카드 미달
+    r2 = route(P, a)
+    new = [f for f in r2.chosen_tags if f not in r.chosen_tags]
+    assert new and r2.extra_sets[0] == [f"C{r2.chosen_tags[new[0]]}_1", f"C{r2.chosen_tags[new[0]]}_2"]
