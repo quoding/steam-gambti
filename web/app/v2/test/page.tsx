@@ -144,6 +144,8 @@ export default function V2Test() {
   }
   const answered = rt?.answered ?? 0;
   const total = Math.max(rt?.path_length ?? 20, 20);
+  // v2.3 배치: 분기로 길이가 바뀌므로 남은 수를 단정하지 않고 범위로 표시(문서 §8)
+  const range = step.kind === "q" && Boolean(step.q.hint || step.q.prompt) && rt?.max_total;
   const pct = step.kind === "q" ? Math.min(100, (answered / total) * 100) : 100;
 
   return (
@@ -153,7 +155,7 @@ export default function V2Test() {
         <div className="progress-track" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={answered}>
           <div className="progress-fill" style={{ width: `${pct}%` }} />
         </div>
-        <span className="progress-label">{step.kind === "q" ? `${answered + 1} / ${total}` : "마무리"}</span>
+        <span className="progress-label">{step.kind === "q" ? `${answered + 1} / ${range ? `20~${rt!.max_total}` : total}` : "마무리"}</span>
       </div>
       {notice && <div className="notice small" style={{ marginBottom: 12 }}>{notice}</div>}
       {err && <div className="notice err" style={{ marginBottom: 12 }}>{err}</div>}
@@ -162,6 +164,8 @@ export default function V2Test() {
         const q = step.q;
         const explore = q.stage === "explore";
         const excl = q.exclusive_codes ?? [];
+        const short = explore ? Boolean(q.hint) : Boolean(q.prompt);
+        const firstConfirm = rt?.path.find((id) => id.startsWith("C")) === q.question_id;
         const toggle = (code: string) => {
           if (!explore) { setPick([code]); commit(q.question_id, code); return; }
           setPick((p) => {
@@ -173,17 +177,32 @@ export default function V2Test() {
         };
         return (
           <div className="card" key={q.question_id}>
-            <div className="row">
-              <span className="q-num">{explore ? "끌리는 쪽 찾기" : "취향 확인"}</span>
-              <span className="spacer" />
-              {explore && <span className="tiny">최대 {q.max_select ?? 2}개</span>}
-            </div>
-            <div className="q-text" tabIndex={-1} ref={headRef} id={`qt-${q.question_id}`}>{q.text}</div>
-            {!explore && q.context && <p className="tiny" style={{ margin: "6px 0 0" }}>{q.context}</p>}
+            {short ? (
+              // v2.3 배치: 공통 질문 → (탐색) 짧은 안내 / (확인) 큰 글씨 행동 문구
+              <>
+                <div className={explore ? "q-text" : "q-prompt"} style={explore ? { marginBottom: 4 } : undefined}
+                  tabIndex={-1} ref={headRef} id={`qt-${q.question_id}`}>{explore ? q.text : q.prompt}</div>
+                {explore && <p className="small muted" style={{ margin: "0 0 16px" }}>{q.hint}</p>}
+                {!explore && <div className="q-text">{q.text}</div>}
+                {!explore && q.guide && (firstConfirm
+                  ? <div className="notice small" style={{ margin: "10px 0 16px" }}>{q.guide.map((g) => <div key={g}>{g}</div>)}</div>
+                  : <details className="acc tiny" style={{ margin: "6px 0 12px" }}><summary>도움말</summary>
+                    {q.guide.map((g) => <div key={g}>{g}</div>)}</details>)}
+              </>
+            ) : <>
+              <div className="row">
+                <span className="q-num">{explore ? "끌리는 쪽 찾기" : "취향 확인"}</span>
+                <span className="spacer" />
+                {explore && <span className="tiny">최대 {q.max_select ?? 2}개</span>}
+              </div>
+              <div className="q-text" tabIndex={-1} ref={headRef} id={`qt-${q.question_id}`}>{q.text}</div>
+              {!explore && q.context && <p className="tiny" style={{ margin: "6px 0 0" }}>{q.context}</p>}
+            </>}
             <div className="options" role={explore ? "group" : "radiogroup"} aria-labelledby={`qt-${q.question_id}`}>
               {q.options.map((o) => (
                 <button key={o.code} role={explore ? "checkbox" : "radio"} aria-checked={pick.includes(o.code)}
-                  className={`opt ${["X", "N"].includes(o.code) ? "unknown" : ""}`} onClick={() => toggle(o.code)} disabled={busy}>
+                  className={`opt ${["X", "N"].includes(o.code) ? "unknown" : ""}`} onClick={() => toggle(o.code)} disabled={busy}
+                  style={short && o.code === (explore ? "N" : "X") ? { marginTop: 10 } : undefined}>
                   <span className="dot" aria-hidden style={explore ? { borderRadius: 6 } : undefined} />
                   <span>{o.label}</span>
                 </button>

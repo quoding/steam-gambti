@@ -6,7 +6,7 @@ import pytest
 
 from gembti.v2 import import_bank
 from gembti.v2.engine import judge_v2, route, score_tags
-from gembti.v2.policy import BANKS, get_v2, load_v2
+from gembti.v2.policy import BANKS, active_version, get_v2, load_v2
 from tests.test_v2_api import session, v2env, walk  # noqa: F401  (픽스처 재사용)
 
 P = get_v2("v2.2")
@@ -40,7 +40,7 @@ def test_counts_and_structure():
     assert [s["code"] for s in P.confirm["scale"]] == list("ABCDEX")
     for q in P.explore["questions"]:  # 탐색은 A~D + N/X만, 확인 척도와 섞이지 않음
         assert [o["code"] for o in q["options"]] == ["A", "B", "C", "D", "N", "X"]
-    assert get_v2().versions["questionnaire_version"] == "v2.2"
+    assert get_v2("v2.2").versions["questionnaire_version"] == "v2.2"
     assert get_v2("v2.0").versions["questionnaire_version"] == "v2.0" and load_v2().routing["routing_version"] == "v2.0"
 
 
@@ -128,13 +128,13 @@ def test_attempt_version_pinning(v2env):  # noqa: F811
     old = c.post("/api/v2/route", json={**s, "answers": {"E01": ["A"]}}).json()
     assert old["questionnaire_version"] == "v2.0"
     assert old["next"]["text"] == get_v2("v2.0").explore_by_id["E02"]["text"]
-    ans, r = walk(c, s, lambda q: ["A"] if q["stage"] == "explore" else "A")  # 새 응시(빈 답) → v2.2
-    assert r["questionnaire_version"] == "v2.2"
+    ans, r = walk(c, s, lambda q: ["A"] if q["stage"] == "explore" else "A")  # 새 응시(빈 답) → 현재 활성 은행
+    assert r["questionnaire_version"] == active_version()
     sub = c.post("/api/v2/submit", json={**s, "answers": ans}).json()
     con.execute("UPDATE v2_sessions SET attempt_version='v2.0' WHERE session_key=?", (s["session_key"],))
     v = c.post(f"/api/v2/submissions/{sub['submission_id']}/view", json={**s}).json()
     assert v["card"] == sub["card"]  # 과거 제출은 자기 은행으로 조회
-    assert set(BANKS) == {"v2.0", "v2.2"}
+    assert {"v2.0", "v2.2"} <= set(BANKS)
     con.close()
 
 

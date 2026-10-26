@@ -105,10 +105,11 @@ def question_payload(p, qid: str) -> dict:
     if qid.startswith("E"):
         q = p.explore_by_id[qid]
         return {"question_id": qid, "stage": "explore", "text": q["text"], "max_select": q["max_select"],
-                "exclusive_codes": q["exclusive_codes"],
+                "exclusive_codes": q["exclusive_codes"], "hint": p.explore.get("hint"),
                 "options": [{"code": o["code"], "label": o["label"]} for o in q["options"]]}
     q = p.confirm_by_id[qid]
     return {"question_id": qid, "stage": "confirm", "text": q["text"], "context": p.confirm.get("context"),
+            "prompt": p.confirm.get("prompt"), "guide": p.confirm.get("guide"),
             "options": [{"code": s["code"], "label": s["label"]} for s in p.confirm["scale"]]}
 
 
@@ -127,7 +128,7 @@ def questionnaire(version: str | None = None):
     if version is not None and version not in BANKS:
         raise HTTPException(404, "not_found")
     p = get_v2(version)
-    return {"versions": p.versions, "intro": p.explore["intro"], "base_total": p.routing["base_total"],
+    return {"versions": p.versions, "intro_title": p.explore.get("intro_title"), "intro": p.explore["intro"], "base_total": p.routing["base_total"],
             "max_total": p.routing["max_total"],
             "free_texts": [{"free_text_id": f["free_text_id"], "text": f["text"], "max_chars": f["max_chars"]}
                            for f in V1.free_texts],

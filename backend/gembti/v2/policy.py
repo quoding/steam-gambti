@@ -12,7 +12,8 @@ V2_DIR = POLICY_DIR / "v2"
 EXPLORE_CODES = ("A", "B", "C", "D")
 # 질문지 은행: 버전마다 문항·분기 설정을 분리한다. registry·cards는 공용(policy/v2/).
 # 과거 응시·제출은 자기 버전의 은행으로만 다시 판정한다(새 은행으로 묵시 재판정 금지).
-BANKS = {"v2.0": V2_DIR, "v2.2": V2_DIR / "banks" / "v2.2"}
+BANKS = {"v2.0": V2_DIR, "v2.2": V2_DIR / "banks" / "v2.2",
+         "v2.3": V2_DIR / "banks" / "v2.3"}
 
 
 @dataclass

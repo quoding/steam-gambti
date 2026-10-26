@@ -86,6 +86,7 @@ h3 { font-size: 18px; font-weight: 700; }
 .progress-label { font-size: 14px; font-weight: 700; color: var(--ink-2); min-width: 56px; text-align: right; }
 
 /* 문항 */
+.q-prompt { font-size: 15px; font-weight: 700; color: var(--ink-2); margin: 2px 0 6px; }
 .q-text { font-size: clamp(19px, 4.6vw, 22px); font-weight: 700; line-height: 1.5; margin: 4px 0 20px; }
 .q-num { font-size: 14px; font-weight: 800; color: var(--accent); }
 .options { display: grid; gap: 10px; }

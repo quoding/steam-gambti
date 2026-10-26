@@ -1,0 +1,646 @@
+{
+ "questionnaire_version": "v2.3",
+ "bank_version": "2026-10-26-r2",
+ "stage": "confirm",
+ "source": "GEMBTI_QUESTION_BANK_v2.3.md §2.3·4",
+ "prompt": "이런 플레이는 어때요?",
+ "guide": [
+  "잘할 자신보다, 해보고 싶은지 골라 주세요.",
+  "난이도는 나에게 맞는다고 생각해 주세요."
+ ],
+ "scale": [
+  {
+   "code": "A",
+   "label": "많이 끌려요",
+   "points": 2
+  },
+  {
+   "code": "B",
+   "label": "조금 끌려요",
+   "points": 1
+  },
+  {
+   "code": "C",
+   "label": "좋지도 싫지도 않아요",
+   "points": 0
+  },
+  {
+   "code": "D",
+   "label": "별로 안 끌려요",
+   "points": -1
+  },
+  {
+   "code": "E",
+   "label": "전혀 안 끌려요",
+   "points": -2
+  },
+  {
+   "code": "X",
+   "label": "모르겠어요",
+   "points": null
+  }
+ ],
+ "note": "각 응답은 대상 tagid 하나에만 기여. _1·_2 기본 확인, _3 예비 확인.",
+ "questions": [
+  {
+   "question_id": "C1695_1",
+   "tagid": 1695,
+   "family_id": "G01",
+   "role": "primary",
+   "text": "갈 수 있는 마을 중 원하는 곳부터 가기",
+   "intent": "주요 일을 진행하는 순서를 스스로 정하는 자유"
+  },
+  {
+   "question_id": "C1695_2",
+   "tagid": 1695,
+   "family_id": "G01",
+   "role": "primary",
+   "text": "지도에서 다음에 할 일을 직접 고르기",
+   "intent": "주요 일을 진행하는 순서를 스스로 정하는 자유"
+  },
+  {
+   "question_id": "C1695_3",
+   "tagid": 1695,
+   "family_id": "G01",
+   "role": "reserve",
+   "text": "하던 일을 잠시 두고 다른 지역으로 가기",
+   "intent": "주요 일을 진행하는 순서를 스스로 정하는 자유"
+  },
+  {
+   "question_id": "C3834_1",
+   "tagid": 3834,
+   "family_id": "G01",
+   "role": "primary",
+   "text": "무엇이 있는지 궁금한 샛길에 들어가기",
+   "intent": "아직 모르는 장소를 직접 찾아보는 즐거움"
+  },
+  {
+   "question_id": "C3834_2",
+   "tagid": 3834,
+   "family_id": "G01",
+   "role": "primary",
+   "text": "멀리 보이는 낯선 건물을 직접 살펴보기",
+   "intent": "아직 모르는 장소를 직접 찾아보는 즐거움"
+  },
+  {
+   "question_id": "C3834_3",
+   "tagid": 3834,
+   "family_id": "G01",
+   "role": "reserve",
+   "text": "새로 열린 통로가 어디로 이어지는지 보기",
+   "intent": "아직 모르는 장소를 직접 찾아보는 즐거움"
+  },
+  {
+   "question_id": "C1716_1",
+   "tagid": 1716,
+   "family_id": "G02",
+   "role": "primary",
+   "text": "도전이 끝나면 얻은 장비 없이 새로 시작하기",
+   "intent": "매 도전의 초기화와 새로 주어진 조건에 적응하기"
+  },
+  {
+   "question_id": "C1716_2",
+   "tagid": 1716,
+   "family_id": "G02",
+   "role": "primary",
+   "text": "도전할 때마다 달라지는 길에 적응하기",
+   "intent": "매 도전의 초기화와 새로 주어진 조건에 적응하기"
+  },
+  {
+   "question_id": "C1716_3",
+   "tagid": 1716,
+   "family_id": "G02",
+   "role": "reserve",
+   "text": "매번 다르게 주어지는 능력으로 방법 짜기",
+   "intent": "매 도전의 초기화와 새로 주어진 조건에 적응하기"
+  },
+  {
+   "question_id": "C3959_1",
+   "tagid": 3959,
+   "family_id": "G02",
+   "role": "primary",
+   "text": "도전에서 키운 기본 능력을 다음에도 쓰기",
+   "intent": "반복 도전 사이에 축적되는 성장"
+  },
+  {
+   "question_id": "C3959_2",
+   "tagid": 3959,
+   "family_id": "G02",
+   "role": "primary",
+   "text": "반복 도전으로 다음에 쓸 새 장비 열기",
+   "intent": "반복 도전 사이에 축적되는 성장"
+  },
+  {
+   "question_id": "C3959_3",
+   "tagid": 3959,
+   "family_id": "G02",
+   "role": "reserve",
+   "text": "실패해도 남은 재료로 기본 능력 올리기",
+   "intent": "반복 도전 사이에 축적되는 성장"
+  },
+  {
+   "question_id": "C599_1",
+   "tagid": 599,
+   "family_id": "G03",
+   "role": "primary",
+   "text": "실제처럼 페달과 브레이크로 운전하기",
+   "intent": "현실 대상의 작동·조작을 재현"
+  },
+  {
+   "question_id": "C599_2",
+   "tagid": 599,
+   "family_id": "G03",
+   "role": "primary",
+   "text": "농기계의 장치를 실제처럼 조작하기",
+   "intent": "현실 대상의 작동·조작을 재현"
+  },
+  {
+   "question_id": "C599_3",
+   "tagid": 599,
+   "family_id": "G03",
+   "role": "reserve",
+   "text": "계기판을 보며 비행기 기울기 조절하기",
+   "intent": "현실 대상의 작동·조작을 재현"
+  },
+  {
+   "question_id": "C12472_1",
+   "tagid": 12472,
+   "family_id": "G03",
+   "role": "primary",
+   "text": "가게 예산을 재료비와 인건비로 나눠 쓰기",
+   "intent": "한정된 운영 자원의 배분·조정"
+  },
+  {
+   "question_id": "C12472_2",
+   "tagid": 12472,
+   "family_id": "G03",
+   "role": "primary",
+   "text": "손님이 몰리는 곳에 직원 배치하기",
+   "intent": "한정된 운영 자원의 배분·조정"
+  },
+  {
+   "question_id": "C12472_3",
+   "tagid": 12472,
+   "family_id": "G03",
+   "role": "reserve",
+   "text": "공장 생산량에 맞춰 원료 주문량 조절하기",
+   "intent": "한정된 운영 자원의 배분·조정"
+  },
+  {
+   "question_id": "C1643_1",
+   "tagid": 1643,
+   "family_id": "G04",
+   "role": "primary",
+   "text": "빈 땅에 길과 건물을 원하는 모양으로 놓기",
+   "intent": "공간·구조물을 배치하고 형태를 만드는 활동"
+  },
+  {
+   "question_id": "C1643_2",
+   "tagid": 1643,
+   "family_id": "G04",
+   "role": "primary",
+   "text": "기둥과 다리판의 위치를 정해 다리 만들기",
+   "intent": "공간·구조물을 배치하고 형태를 만드는 활동"
+  },
+  {
+   "question_id": "C1643_3",
+   "tagid": 1643,
+   "family_id": "G04",
+   "role": "reserve",
+   "text": "집의 벽을 옮겨 원하는 방 구조 만들기",
+   "intent": "공간·구조물을 배치하고 형태를 만드는 활동"
+  },
+  {
+   "question_id": "C7332_1",
+   "tagid": 7332,
+   "family_id": "G04",
+   "role": "primary",
+   "text": "매번 돌아오는 캠프에 시설 늘리기",
+   "intent": "돌아올 거점의 지속적인 확장"
+  },
+  {
+   "question_id": "C7332_2",
+   "tagid": 7332,
+   "family_id": "G04",
+   "role": "primary",
+   "text": "계속 쓸 우주 기지에 새 구역 붙이기",
+   "intent": "돌아올 거점의 지속적인 확장"
+  },
+  {
+   "question_id": "C7332_3",
+   "tagid": 7332,
+   "family_id": "G04",
+   "role": "reserve",
+   "text": "돌아올 본부에 새 시설을 더해 키우기",
+   "intent": "돌아올 거점의 지속적인 확장"
+  },
+  {
+   "question_id": "C9_1",
+   "tagid": 9,
+   "family_id": "G05",
+   "role": "primary",
+   "text": "적이 움직일 곳을 예상해 미리 작전 짜기",
+   "intent": "미리 계획하고 상대·상황에 맞춰 선택 배치"
+  },
+  {
+   "question_id": "C9_2",
+   "tagid": 9,
+   "family_id": "G05",
+   "role": "primary",
+   "text": "다음 상황을 생각하며 병력 나눠 보내기",
+   "intent": "미리 계획하고 상대·상황에 맞춰 선택 배치"
+  },
+  {
+   "question_id": "C9_3",
+   "tagid": 9,
+   "family_id": "G05",
+   "role": "reserve",
+   "text": "상대의 방어 배치를 보고 공략법 세우기",
+   "intent": "미리 계획하고 상대·상황에 맞춰 선택 배치"
+  },
+  {
+   "question_id": "C1741_1",
+   "tagid": 1741,
+   "family_id": "G05",
+   "role": "primary",
+   "text": "적이 멈춘 내 차례에 행동을 골라 넘기기",
+   "intent": "계획할 수 있는 번갈아 행동 구조"
+  },
+  {
+   "question_id": "C1741_2",
+   "tagid": 1741,
+   "family_id": "G05",
+   "role": "primary",
+   "text": "아군과 적이 번갈아 이동하거나 공격하기",
+   "intent": "계획할 수 있는 번갈아 행동 구조"
+  },
+  {
+   "question_id": "C1741_3",
+   "tagid": 1741,
+   "family_id": "G05",
+   "role": "reserve",
+   "text": "시간 제한 없이 한 수를 고른 뒤 차례 넘기기",
+   "intent": "계획할 수 있는 번갈아 행동 구조"
+  },
+  {
+   "question_id": "C1664_1",
+   "tagid": 1664,
+   "family_id": "G06",
+   "role": "primary",
+   "text": "스위치가 작동하는 원리를 찾아 문 열기",
+   "intent": "제시된 장치·배치 문제의 해법 찾기"
+  },
+  {
+   "question_id": "C1664_2",
+   "tagid": 1664,
+   "family_id": "G06",
+   "role": "primary",
+   "text": "조각을 돌려 빈틈없이 틀 안에 넣기",
+   "intent": "제시된 장치·배치 문제의 해법 찾기"
+  },
+  {
+   "question_id": "C1664_3",
+   "tagid": 1664,
+   "family_id": "G06",
+   "role": "reserve",
+   "text": "거울을 돌려 빛이 출구까지 닿게 하기",
+   "intent": "제시된 장치·배치 문제의 해법 찾기"
+  },
+  {
+   "question_id": "C6129_1",
+   "tagid": 6129,
+   "family_id": "G06",
+   "role": "primary",
+   "text": "주어진 조건으로 누가 어디 앉았는지 찾기",
+   "intent": "명시된 조건을 대조·배제해 결론 도출"
+  },
+  {
+   "question_id": "C6129_2",
+   "tagid": 6129,
+   "family_id": "G06",
+   "role": "primary",
+   "text": "단서의 앞뒤 관계로 사건 순서 알아내기",
+   "intent": "명시된 조건을 대조·배제해 결론 도출"
+  },
+  {
+   "question_id": "C6129_3",
+   "tagid": 6129,
+   "family_id": "G06",
+   "role": "reserve",
+   "text": "여러 문장 중 동시에 참인 조합 찾기",
+   "intent": "명시된 조건을 대조·배제해 결론 도출"
+  },
+  {
+   "question_id": "C1742_1",
+   "tagid": 1742,
+   "family_id": "G07",
+   "role": "primary",
+   "text": "등장인물에게 벌어지는 사건 따라가기",
+   "intent": "인물·사건의 서사를 따라가는 즐거움"
+  },
+  {
+   "question_id": "C1742_2",
+   "tagid": 1742,
+   "family_id": "G07",
+   "role": "primary",
+   "text": "함께 다니는 인물의 과거 이야기 알아가기",
+   "intent": "인물·사건의 서사를 따라가는 즐거움"
+  },
+  {
+   "question_id": "C1742_3",
+   "tagid": 1742,
+   "family_id": "G07",
+   "role": "reserve",
+   "text": "앞선 사건의 이유가 밝혀지는 이야기 보기",
+   "intent": "인물·사건의 서사를 따라가는 즐거움"
+  },
+  {
+   "question_id": "C6426_1",
+   "tagid": 6426,
+   "family_id": "G07",
+   "role": "primary",
+   "text": "고른 대답에 따라 인물과의 관계 바꾸기",
+   "intent": "자신의 선택에 따른 후속 서사 변화"
+  },
+  {
+   "question_id": "C6426_2",
+   "tagid": 6426,
+   "family_id": "G07",
+   "role": "primary",
+   "text": "누구를 돕느냐에 따라 달라지는 이야기 보기",
+   "intent": "자신의 선택에 따른 후속 서사 변화"
+  },
+  {
+   "question_id": "C6426_3",
+   "tagid": 6426,
+   "family_id": "G07",
+   "role": "reserve",
+   "text": "내 결정에 따라 달라지는 결말 보기",
+   "intent": "자신의 선택에 따른 후속 서사 변화"
+  },
+  {
+   "question_id": "C1662_1",
+   "tagid": 1662,
+   "family_id": "G08",
+   "role": "primary",
+   "text": "남은 물을 보며 다음 보급 장소 정하기",
+   "intent": "생존 자원을 관리하고 위협에 대비"
+  },
+  {
+   "question_id": "C1662_2",
+   "tagid": 1662,
+   "family_id": "G08",
+   "role": "primary",
+   "text": "추운 밤을 버틸 준비를 낮에 해두기",
+   "intent": "생존 자원을 관리하고 위협에 대비"
+  },
+  {
+   "question_id": "C1662_3",
+   "tagid": 1662,
+   "family_id": "G08",
+   "role": "reserve",
+   "text": "한정된 식량을 나눠 먹으며 오래 버티기",
+   "intent": "생존 자원을 관리하고 위협에 대비"
+  },
+  {
+   "question_id": "C1702_1",
+   "tagid": 1702,
+   "family_id": "G08",
+   "role": "primary",
+   "text": "나무와 천을 조합해 도구 만들기",
+   "intent": "재료를 조합해 도구·물건 제작"
+  },
+  {
+   "question_id": "C1702_2",
+   "tagid": 1702,
+   "family_id": "G08",
+   "role": "primary",
+   "text": "필요한 부품을 조합해 장비 완성하기",
+   "intent": "재료를 조합해 도구·물건 제작"
+  },
+  {
+   "question_id": "C1702_3",
+   "tagid": 1702,
+   "family_id": "G08",
+   "role": "reserve",
+   "text": "같은 재료로 만들 여러 물건 중 하나 고르기",
+   "intent": "재료를 조합해 도구·물건 제작"
+  },
+  {
+   "question_id": "C1685_1",
+   "tagid": 1685,
+   "family_id": "G09",
+   "role": "primary",
+   "text": "다른 사람과 역할을 나눠 목표 달성하기",
+   "intent": "다른 사람과 공동 목표를 달성"
+  },
+  {
+   "question_id": "C1685_2",
+   "tagid": 1685,
+   "family_id": "G09",
+   "role": "primary",
+   "text": "한 사람이 길을 열어 다른 사람이 지나가기",
+   "intent": "다른 사람과 공동 목표를 달성"
+  },
+  {
+   "question_id": "C1685_3",
+   "tagid": 1685,
+   "family_id": "G09",
+   "role": "reserve",
+   "text": "서로 막힌 부분을 도와 함께 진행하기",
+   "intent": "다른 사람과 공동 목표를 달성"
+  },
+  {
+   "question_id": "C1775_1",
+   "tagid": 1775,
+   "family_id": "G10",
+   "role": "primary",
+   "text": "다른 사람이 조종하는 상대와 승부 겨루기",
+   "intent": "실제 사람을 상대로 승부"
+  },
+  {
+   "question_id": "C1775_2",
+   "tagid": 1775,
+   "family_id": "G10",
+   "role": "primary",
+   "text": "상대 플레이어의 대응을 읽으며 대결하기",
+   "intent": "실제 사람을 상대로 승부"
+  },
+  {
+   "question_id": "C1775_3",
+   "tagid": 1775,
+   "family_id": "G10",
+   "role": "reserve",
+   "text": "다른 참가자와 한 판의 승패 겨루기",
+   "intent": "실제 사람을 상대로 승부"
+  },
+  {
+   "question_id": "C32322_1",
+   "tagid": 32322,
+   "family_id": "G11",
+   "role": "primary",
+   "text": "대결에서 함께 쓸 카드들을 골라 묶기",
+   "intent": "플레이에 사용할 카드 묶음의 구성·수정"
+  },
+  {
+   "question_id": "C32322_2",
+   "tagid": 32322,
+   "family_id": "G11",
+   "role": "primary",
+   "text": "새 카드를 넣고 기존 카드를 빼서 구성 바꾸기",
+   "intent": "플레이에 사용할 카드 묶음의 구성·수정"
+  },
+  {
+   "question_id": "C32322_3",
+   "tagid": 32322,
+   "family_id": "G11",
+   "role": "reserve",
+   "text": "효과가 이어지는 카드들로 묶음 만들기",
+   "intent": "플레이에 사용할 카드 묶음의 구성·수정"
+  },
+  {
+   "question_id": "C1666_1",
+   "tagid": 1666,
+   "family_id": "G11",
+   "role": "primary",
+   "text": "손에 든 카드 중 지금 쓸 카드 고르기",
+   "intent": "주어진 카드의 선택·사용"
+  },
+  {
+   "question_id": "C1666_2",
+   "tagid": 1666,
+   "family_id": "G11",
+   "role": "primary",
+   "text": "어떤 카드부터 낼지 순서 정하기",
+   "intent": "주어진 카드의 선택·사용"
+  },
+  {
+   "question_id": "C1666_3",
+   "tagid": 1666,
+   "family_id": "G11",
+   "role": "reserve",
+   "text": "미리 정해진 카드 묶음으로 한 판 진행하기",
+   "intent": "주어진 카드의 선택·사용"
+  },
+  {
+   "question_id": "C1774_1",
+   "tagid": 1774,
+   "family_id": "G12",
+   "role": "primary",
+   "text": "조준점을 움직여 표적에 쏘기",
+   "intent": "방향을 맞춰 발사체로 표적을 맞히기"
+  },
+  {
+   "question_id": "C1774_2",
+   "tagid": 1774,
+   "family_id": "G12",
+   "role": "primary",
+   "text": "움직이는 표적을 따라 조준하며 쏘기",
+   "intent": "방향을 맞춰 발사체로 표적을 맞히기"
+  },
+  {
+   "question_id": "C1774_3",
+   "tagid": 1774,
+   "family_id": "G12",
+   "role": "reserve",
+   "text": "표적 거리에 맞춰 조준 위치 바꾸기",
+   "intent": "방향을 맞춰 발사체로 표적을 맞히기"
+  },
+  {
+   "question_id": "C1667_1",
+   "tagid": 1667,
+   "family_id": "G13",
+   "role": "primary",
+   "text": "빈 복도의 낯선 발소리에 긴장하기",
+   "intent": "불안·두려움의 분위기를 의도적으로 경험"
+  },
+  {
+   "question_id": "C1667_2",
+   "tagid": 1667,
+   "family_id": "G13",
+   "role": "primary",
+   "text": "익숙한 방이 낯설게 변하는 불안함 느끼기",
+   "intent": "불안·두려움의 분위기를 의도적으로 경험"
+  },
+  {
+   "question_id": "C1667_3",
+   "tagid": 1667,
+   "family_id": "G13",
+   "role": "reserve",
+   "text": "보이지 않는 무언가가 다가오는 공포 느끼기",
+   "intent": "불안·두려움의 분위기를 의도적으로 경험"
+  },
+  {
+   "question_id": "C1752_1",
+   "tagid": 1752,
+   "family_id": "G14",
+   "role": "primary",
+   "text": "음악의 박자에 맞춰 버튼 누르기",
+   "intent": "소리의 박자에 맞춘 조작"
+  },
+  {
+   "question_id": "C1752_2",
+   "tagid": 1752,
+   "family_id": "G14",
+   "role": "primary",
+   "text": "음악에 맞춰 화면 속 순서대로 입력하기",
+   "intent": "소리의 박자에 맞춘 조작"
+  },
+  {
+   "question_id": "C1752_3",
+   "tagid": 1752,
+   "family_id": "G14",
+   "role": "reserve",
+   "text": "음악의 정해진 순간에 맞춰 캐릭터 움직이기",
+   "intent": "소리의 박자에 맞춘 조작"
+  },
+  {
+   "question_id": "C699_1",
+   "tagid": 699,
+   "family_id": "G15",
+   "role": "primary",
+   "text": "자동차로 결승선까지 걸리는 시간 줄이기",
+   "intent": "차량 주행으로 기록·순위 경쟁"
+  },
+  {
+   "question_id": "C699_2",
+   "tagid": 699,
+   "family_id": "G15",
+   "role": "primary",
+   "text": "앞차를 추월해 더 높은 순위로 들어오기",
+   "intent": "차량 주행으로 기록·순위 경쟁"
+  },
+  {
+   "question_id": "C699_3",
+   "tagid": 699,
+   "family_id": "G15",
+   "role": "reserve",
+   "text": "같은 코스를 달려 내 이전 기록 깨기",
+   "intent": "차량 주행으로 기록·순위 경쟁"
+  },
+  {
+   "question_id": "C1625_1",
+   "tagid": 1625,
+   "family_id": "G16",
+   "role": "primary",
+   "text": "점프할 위치를 골라 다음 발판으로 건너기",
+   "intent": "이동·점프의 거리와 타이밍 조절"
+  },
+  {
+   "question_id": "C1625_2",
+   "tagid": 1625,
+   "family_id": "G16",
+   "role": "primary",
+   "text": "위아래 발판을 점프해 목적지까지 올라가기",
+   "intent": "이동·점프의 거리와 타이밍 조절"
+  },
+  {
+   "question_id": "C1625_3",
+   "tagid": 1625,
+   "family_id": "G16",
+   "role": "reserve",
+   "text": "움직이는 발판에 맞춰 건너갈 때 고르기",
+   "intent": "이동·점프의 거리와 타이밍 조절"
+  }
+ ]
+}

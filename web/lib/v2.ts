@@ -6,6 +6,7 @@ export interface V2Option { code: string; label: string }
 export interface V2Question {
   question_id: string; stage: "explore" | "confirm"; text: string; options: V2Option[];
   max_select?: number; exclusive_codes?: string[]; context?: string | null;
+  hint?: string | null; prompt?: string | null; guide?: string[] | null;
 }
 export interface V2Route {
   questionnaire_version: string; done: boolean; next: V2Question | null; answered: number; path_length: number; max_total: number;

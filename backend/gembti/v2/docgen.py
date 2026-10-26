@@ -45,7 +45,7 @@ def render() -> str:
     for q in p.confirm["questions"]:
         L.append(f"| {q['question_id']} | {q['family_id']} | {p.tag_name[q['tagid']]}({q['tagid']}) | "
                  f"{ROLE_KO.get(q['role'], q['role'])} | {q.get('situation') or q.get('intent', '')} | {q['text']} | "
-                 f"{q['distinguish']} |")
+                 f"{q.get('distinguish', '')} |")
     L += ["", "## 5. 커버리지", "", "| 태그 | 계열 | 기본 2문항 | 보완 | 런타임 근거 수 | 상태 규칙 |", "|---|---|---|---|---|---|"]
     for f in p.families:
         for t in f["tags"]:

@@ -11,17 +11,20 @@ export default function V2Home() {
   const [showLib, setShowLib] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [intro, setIntro] = useState<string[]>([]);
+  const [title, setTitle] = useState<string | null>(null);
   useEffect(() => { ensureSession().then(setSession).catch((e) => setErr(errorMessage(e))); }, []);
   useEffect(() => {
-    api<{ intro: string }>("/v2/questionnaire").then((q) => setIntro(q.intro.split("\n\n"))).catch(() => setIntro([]));
+    api<{ intro: string; intro_title?: string | null }>("/v2/questionnaire")
+      .then((q) => { setIntro(q.intro.split("\n\n")); setTitle(q.intro_title ?? null); }).catch(() => setIntro([]));
   }, []);
 
   return (
     <main className="shell">
       <TopBar right={<span className="chip soft">v2 미리보기</span>} />
       <section className="hero-intro">
-        <span className="chip warm">질문 20~24개</span>
-        <h1 style={{ marginTop: 14 }}>끌리는 장면부터 고르면,<br />질문이 나에게 맞춰져요</h1>
+        {title ? <h1>{title}</h1> : <>
+          <span className="chip warm">질문 20~24개</span>
+          <h1 style={{ marginTop: 14 }}>끌리는 장면부터 고르면,<br />질문이 나에게 맞춰져요</h1></>}
         {intro.map((t) => <p key={t}>{t}</p>)}
       </section>
       {err && <div className="notice err">{err}</div>}

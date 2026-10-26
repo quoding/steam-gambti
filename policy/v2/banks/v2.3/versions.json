@@ -1,0 +1,14 @@
+{
+ "questionnaire_version": "v2.3",
+ "bank_version": "2026-10-26-r2",
+ "layout_version": "v2.3-l1",
+ "scoring_version": "v2.0",
+ "type_mapping_version": "v2.0",
+ "routing_version": "v2.2",
+ "tie_policy_version": "v2.0",
+ "recommendation_version": "v2.0",
+ "catalog_policy_version": "v2.0",
+ "review_policy_version": "v2.0",
+ "library_policy_version": "v2.0",
+ "content_policy_version": "v1.0"
+}

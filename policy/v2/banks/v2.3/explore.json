@@ -1,0 +1,576 @@
+{
+ "questionnaire_version": "v2.3",
+ "bank_version": "2026-10-26-r2",
+ "stage": "explore",
+ "source": "GEMBTI_QUESTION_BANK_v2.3.md §2.1·2.2·3",
+ "intro_title": "어떤 게임이 끌리는지 알아볼까요?",
+ "intro": "잘하는 것보다 해보고 싶은 걸 골라 주세요.\n\n답변에 따라 질문이 달라져요. 총 20~24문항이에요.",
+ "hint": "끌리는 것, 최대 2개",
+ "note": "분기 선택 전용. 선택 하나는 연결 계열 탐색 +1, 연결 tagid 선택 +1. N/X·비선택은 점수 없음.",
+ "questions": [
+  {
+   "question_id": "E01",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "갈 곳을 자유롭게 정하기",
+     "family_id": "G01",
+     "tag_hint": 1695
+    },
+    {
+     "code": "B",
+     "label": "상대 움직임을 미리 읽기",
+     "family_id": "G05",
+     "tag_hint": 9
+    },
+    {
+     "code": "C",
+     "label": "함께 목표 달성하기",
+     "family_id": "G09",
+     "tag_hint": 1685
+    },
+    {
+     "code": "D",
+     "label": "으스스한 분위기 느끼기",
+     "family_id": "G13",
+     "tag_hint": 1667
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E02",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "박자에 맞춰 버튼 누르기",
+     "family_id": "G14",
+     "tag_hint": 1752
+    },
+    {
+     "code": "B",
+     "label": "매번 바뀌는 길에 도전하기",
+     "family_id": "G02",
+     "tag_hint": 1716
+    },
+    {
+     "code": "C",
+     "label": "장치의 해법 찾기",
+     "family_id": "G06",
+     "tag_hint": 1664
+    },
+    {
+     "code": "D",
+     "label": "다른 사람과 승부 겨루기",
+     "family_id": "G10",
+     "tag_hint": 1775
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E03",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "인물의 이야기 따라가기",
+     "family_id": "G07",
+     "tag_hint": 1742
+    },
+    {
+     "code": "B",
+     "label": "자동차 주행 기록 줄이기",
+     "family_id": "G15",
+     "tag_hint": 699
+    },
+    {
+     "code": "C",
+     "label": "실제처럼 기계 조작하기",
+     "family_id": "G03",
+     "tag_hint": 599
+    },
+    {
+     "code": "D",
+     "label": "함께 쓸 카드 조합 짜기",
+     "family_id": "G11",
+     "tag_hint": 32322
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E04",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "원하는 모양으로 건물 짓기",
+     "family_id": "G04",
+     "tag_hint": 1643
+    },
+    {
+     "code": "B",
+     "label": "식량을 아끼며 살아남기",
+     "family_id": "G08",
+     "tag_hint": 1662
+    },
+    {
+     "code": "C",
+     "label": "조준해서 표적 맞히기",
+     "family_id": "G12",
+     "tag_hint": 1774
+    },
+    {
+     "code": "D",
+     "label": "발판 사이로 점프하기",
+     "family_id": "G16",
+     "tag_hint": 1625
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E05",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "지금 쓸 카드 고르기",
+     "family_id": "G11",
+     "tag_hint": 1666
+    },
+    {
+     "code": "B",
+     "label": "숨겨진 샛길 찾아보기",
+     "family_id": "G01",
+     "tag_hint": 3834
+    },
+    {
+     "code": "C",
+     "label": "점프를 이어 발판 오르기",
+     "family_id": "G16",
+     "tag_hint": 1625
+    },
+    {
+     "code": "D",
+     "label": "단서로 정답 좁혀가기",
+     "family_id": "G06",
+     "tag_hint": 6129
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E06",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "도전할수록 기본 능력 키우기",
+     "family_id": "G02",
+     "tag_hint": 3959
+    },
+    {
+     "code": "B",
+     "label": "낯설고 불안한 분위기 느끼기",
+     "family_id": "G13",
+     "tag_hint": 1667
+    },
+    {
+     "code": "C",
+     "label": "내 선택으로 이야기 바꾸기",
+     "family_id": "G07",
+     "tag_hint": 6426
+    },
+    {
+     "code": "D",
+     "label": "움직이는 표적 맞히기",
+     "family_id": "G12",
+     "tag_hint": 1774
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E07",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "재료로 필요한 물건 만들기",
+     "family_id": "G08",
+     "tag_hint": 1702
+    },
+    {
+     "code": "B",
+     "label": "직원과 예산 배분하기",
+     "family_id": "G03",
+     "tag_hint": 12472
+    },
+    {
+     "code": "C",
+     "label": "박자에 맞춰 연속 입력하기",
+     "family_id": "G14",
+     "tag_hint": 1752
+    },
+    {
+     "code": "D",
+     "label": "역할을 나눠 함께 해결하기",
+     "family_id": "G09",
+     "tag_hint": 1685
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E08",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "내 차례에 행동 정하기",
+     "family_id": "G05",
+     "tag_hint": 1741
+    },
+    {
+     "code": "B",
+     "label": "돌아올 기지를 점점 키우기",
+     "family_id": "G04",
+     "tag_hint": 7332
+    },
+    {
+     "code": "C",
+     "label": "다른 사람의 대응 읽기",
+     "family_id": "G10",
+     "tag_hint": 1775
+    },
+    {
+     "code": "D",
+     "label": "차를 추월해 순위 올리기",
+     "family_id": "G15",
+     "tag_hint": 699
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E09",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "다른 참가자와 한 판 겨루기",
+     "family_id": "G10",
+     "tag_hint": 1775
+    },
+    {
+     "code": "B",
+     "label": "인물의 숨겨진 사연 알기",
+     "family_id": "G07",
+     "tag_hint": 1742
+    },
+    {
+     "code": "C",
+     "label": "낯선 장소 찾아가 보기",
+     "family_id": "G01",
+     "tag_hint": 3834
+    },
+    {
+     "code": "D",
+     "label": "소리와 동작의 박자 맞추기",
+     "family_id": "G14",
+     "tag_hint": 1752
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E10",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "움직이는 발판 건너뛰기",
+     "family_id": "G16",
+     "tag_hint": 1625
+    },
+    {
+     "code": "B",
+     "label": "쓸 카드 묶음 바꾸기",
+     "family_id": "G11",
+     "tag_hint": 32322
+    },
+    {
+     "code": "C",
+     "label": "매번 다른 능력으로 도전하기",
+     "family_id": "G02",
+     "tag_hint": 1716
+    },
+    {
+     "code": "D",
+     "label": "재료를 조합해 물건 만들기",
+     "family_id": "G08",
+     "tag_hint": 1702
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E11",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "운영 상황에 맞춰 자원 쓰기",
+     "family_id": "G03",
+     "tag_hint": 12472
+    },
+    {
+     "code": "B",
+     "label": "거리에 맞춰 조준하기",
+     "family_id": "G12",
+     "tag_hint": 1774
+    },
+    {
+     "code": "C",
+     "label": "무언가 숨어 있는 긴장감",
+     "family_id": "G13",
+     "tag_hint": 1667
+    },
+    {
+     "code": "D",
+     "label": "상대 배치에 맞춰 작전 짜기",
+     "family_id": "G05",
+     "tag_hint": 9
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E12",
+   "text": "어떤 플레이가 끌려요?",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "조각이 들어맞는 배치 찾기",
+     "family_id": "G06",
+     "tag_hint": 1664
+    },
+    {
+     "code": "B",
+     "label": "서로 도우며 목표 이루기",
+     "family_id": "G09",
+     "tag_hint": 1685
+    },
+    {
+     "code": "C",
+     "label": "자동차로 내 기록 깨기",
+     "family_id": "G15",
+     "tag_hint": 699
+    },
+    {
+     "code": "D",
+     "label": "벽과 길을 원하는 곳에 놓기",
+     "family_id": "G04",
+     "tag_hint": 1643
+    },
+    {
+     "code": "N",
+     "label": "끌리는 게 없어요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  }
+ ]
+}
