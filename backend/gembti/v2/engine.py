@@ -88,6 +88,8 @@ def _pick_tag(p: V2Policy, rhash: str, fid: str, tag_int: dict[int, int]) -> int
 
 
 def route(p: V2Policy, answers: dict) -> Route:
+    if p.routing.get("algorithm") == "v2.2":
+        return route_v22(p, answers)
     r = p.routing
     path = list(p.explore_ids)
     for qid in p.explore_ids:
@@ -171,6 +173,97 @@ def _next_extra_set(p, rhash, st, path, asked_fams, order, tags, tag_int) -> lis
     return out[:size]
 
 
+# ---------------------------------------------------------------- 분기 v2.2 (질문지 문서 §8)
+
+
+def _exposure(p: V2Policy) -> dict[int, int]:
+    exp: dict[int, int] = {}
+    for q in p.explore["questions"]:
+        for o in q["options"]:
+            if o["tag_hint"] is not None:
+                exp[o["tag_hint"]] = exp.get(o["tag_hint"], 0) + 1
+    return exp
+
+
+def _pick_tag_v22(p: V2Policy, rhash: str, fid: str, sel: dict[int, int], exp: dict[int, int]) -> int:
+    """선택 횟수/노출 횟수 → 선택 횟수 → 해시. 노출이 많은 태그가 자동으로 유리하지 않게 한다."""
+    tags = [t["tagid"] for t in p.family_by_id[fid]["tags"]]
+    return min(tags, key=lambda t: (-(sel.get(t, 0) / exp[t]), -sel.get(t, 0), _h(f"{rhash}|tag|{t}")))
+
+
+def route_v22(p: V2Policy, answers: dict) -> Route:
+    r, v = p.routing, p.versions
+    path = list(p.explore_ids)
+    for qid in p.explore_ids:
+        if norm_explore(answers.get(qid)) is None:
+            return Route(path, qid, [], [], None, {}, stage="explore")
+    rhash = _h(f"gembti-route-v2|{v['routing_version']}|{v['bank_version']}|{v['layout_version']}|"
+               f"{explore_canonical(p, answers)}")
+    fam_int, sel = interest(p, answers)
+    exp = _exposure(p)
+    order = _family_order(p, rhash, fam_int)
+    social = p.social
+    top: list[str] = []
+    for f in order:  # 상위3: 관심 0 계열도 해시 순서로 들어온다(모두 N/X여도 4계열 확인)
+        if len(top) == r["interest_slots"]:
+            break
+        if f in social and any(c in social for c in top):
+            continue
+        top.append(f)
+    slot = next(f for f in sorted((f for f in p.family_by_id if f not in top), key=lambda f: _h(f"{rhash}|slot|{f}"))
+                if not (f in social and any(c in social for c in top)))
+    chosen = top + [slot]
+    tags = {f: _pick_tag_v22(p, rhash, f, sel, exp) for f in chosen}
+    path += [f"C{tags[f]}_1" for f in chosen] + [f"C{tags[f]}_2" for f in chosen]
+    base = Route(path, None, chosen, [f for f in top if fam_int.get(f, 0) > 0], slot, dict(tags), stage="confirm")
+    for qid in path[len(p.explore_ids):]:
+        if norm_confirm(p, answers.get(qid)) is None:
+            base.next_question = qid
+            return base
+    while len(base.path) < r["max_total"]:
+        st = score_tags(p, answers, base.path)
+        card = build_card(p, st, session_id_v2(p, answers, base.path))
+        top_open = [tags[f] for f in top if st[tags[f]].n < 2 or st[tags[f]].state == "conditional"]
+        if not card.is_discovering and not top_open:
+            break
+        extra = _extra_v22(p, rhash, st, base.path, order, tags, sel, exp, card.is_discovering,
+                           [tags[f] for f in top])
+        if not extra:
+            break
+        base.extra_sets.append(extra)
+        base.path += extra
+        base.stage = "extra"
+        for qid in extra:
+            if norm_confirm(p, answers.get(qid)) is None:
+                base.next_question = qid
+                return base
+    base.done = True
+    base.stage = "done"
+    return base
+
+
+def _extra_v22(p, rhash, st, path, order, tags, sel, exp, discovering, top_tags) -> list[str]:
+    budget = p.routing["max_total"] - len(path)
+    rank = {f: i for i, f in enumerate(order)}
+    # 정규 카드를 이미 충족했으면 상위3계열 태그의 보완만(추가 사유가 그것뿐이므로)
+    probed = sorted((t for t in st if discovering or t in top_tags), key=lambda t: rank[p.family_of[t]])
+    for want in ("n_lt_2", "conditional"):  # _3은 태그별 1회, positive/avoid 태그는 다시 묻지 않음
+        for t in probed:
+            q3 = f"C{t}_3"
+            if q3 in path or st[t].state in ("positive", "avoid"):
+                continue
+            if (want == "n_lt_2" and st[t].n < 2) or (want == "conditional" and st[t].state == "conditional"):
+                return [q3]
+    if discovering and budget >= 2:  # 새 계열은 기본 2문항을 끝낼 예산이 있을 때만
+        for f in order:
+            if f in tags:
+                continue
+            t = _pick_tag_v22(p, rhash, f, sel, exp)
+            tags[f] = t
+            return [f"C{t}_1", f"C{t}_2"]
+    return []
+
+
 # ---------------------------------------------------------------- 배점·상태
 
 
@@ -234,6 +327,7 @@ def session_id_v2(p: V2Policy, answers: dict, path: list[str]) -> str:
     lines = ["gembti-session-v2"] + [f"{k}={v[k]}" for k in
                                      ("questionnaire_version", "scoring_version", "type_mapping_version",
                                       "routing_version", "tie_policy_version")]
+    lines += [f"{k}={v[k]}" for k in ("bank_version", "layout_version") if k in v]  # v2.2부터(v2.0 seed 불변)
     for qid in sorted(path):
         if qid.startswith("E"):
             code = "+".join(norm_explore(answers.get(qid)) or ())

@@ -1,0 +1,574 @@
+{
+ "questionnaire_version": "v2.2",
+ "bank_version": "2026-10-26-r1",
+ "stage": "explore",
+ "source": "GEMBTI_QUESTION_BANK_v2.2.md §3.1·3.2·5",
+ "intro": "어떤 플레이가 끌리는지 알아보는 질문이에요. 잘할 자신이 있는지보다, 직접 해보고 싶은지를 골라 주세요. 게임을 해본 적이 없어도 장면을 떠올릴 수 있으면 답해도 괜찮아요. 떠올리기 어렵다면 ‘잘 모르겠어요’를 골라 주세요.\n\n처음에는 여러 활동 중 끌리는 것을 고르고, 뒤에서는 선택에 맞는 장면을 더 물어봐요. 질문은20~24개이며 답변에 따라 달라져요.",
+ "note": "분기 선택 전용. 선택 하나는 연결 계열 탐색 +1, 연결 tagid 선택 +1. N/X·비선택은 점수 없음.",
+ "questions": [
+  {
+   "question_id": "E01",
+   "text": "처음 보는 게임 소개에서, 해보고 싶은 활동을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "넓은 지도에서 할 일의 순서를 직접 정하기",
+     "family_id": "G01",
+     "tag_hint": 1695
+    },
+    {
+     "code": "B",
+     "label": "다음 상황을 예상하며 행동 계획 세우기",
+     "family_id": "G05",
+     "tag_hint": 9
+    },
+    {
+     "code": "C",
+     "label": "다른 사람과 같은 목표를 함께 완수하기",
+     "family_id": "G09",
+     "tag_hint": 1685
+    },
+    {
+     "code": "D",
+     "label": "무엇이 나타날지 모르는 으스스한 분위기 느끼기",
+     "family_id": "G13",
+     "tag_hint": 1667
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E02",
+   "text": "다음 중 직접 해보고 싶은 플레이를 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "음악의 박자에 맞춰 버튼 누르기",
+     "family_id": "G14",
+     "tag_hint": 1752
+    },
+    {
+     "code": "B",
+     "label": "매번 달라지는 장소의 조건에 맞춰 도전하기",
+     "family_id": "G02",
+     "tag_hint": 1716
+    },
+    {
+     "code": "C",
+     "label": "장치가 작동하는 해법 찾아내기",
+     "family_id": "G06",
+     "tag_hint": 1664
+    },
+    {
+     "code": "D",
+     "label": "다른 사람이 조종하는 상대와 승부 겨루기",
+     "family_id": "G10",
+     "tag_hint": 1775
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E03",
+   "text": "게임에서 맡아 보고 싶은 활동을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "등장인물에게 벌어지는 이야기 따라가기",
+     "family_id": "G07",
+     "tag_hint": 1742
+    },
+    {
+     "code": "B",
+     "label": "차량으로 코스를 달려 기록 줄이기",
+     "family_id": "G15",
+     "tag_hint": 699
+    },
+    {
+     "code": "C",
+     "label": "실제 장비와 비슷한 방식으로 기계 조작하기",
+     "family_id": "G03",
+     "tag_hint": 599
+    },
+    {
+     "code": "D",
+     "label": "함께 쓸 카드들의 묶음 구성하기",
+     "family_id": "G11",
+     "tag_hint": 32322
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E04",
+   "text": "다음 중 플레이해 보고 싶은 장면을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "빈 공간에 구조물을 직접 배치해 만들기",
+     "family_id": "G04",
+     "tag_hint": 1643
+    },
+    {
+     "code": "B",
+     "label": "남은 식량을 살피며 버틸 방법 정하기",
+     "family_id": "G08",
+     "tag_hint": 1662
+    },
+    {
+     "code": "C",
+     "label": "조준점을 움직여 표적 맞히기",
+     "family_id": "G12",
+     "tag_hint": 1774
+    },
+    {
+     "code": "D",
+     "label": "발판 사이를 점프하며 건너가기",
+     "family_id": "G16",
+     "tag_hint": 1625
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E05",
+   "text": "게임에서 새 장소를 만났을 때 해보고 싶은 활동을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "손에 든 카드 중 지금 쓸 카드 고르기",
+     "family_id": "G11",
+     "tag_hint": 1666
+    },
+    {
+     "code": "B",
+     "label": "보이지 않는 샛길 안쪽을 직접 찾아보기",
+     "family_id": "G01",
+     "tag_hint": 3834
+    },
+    {
+     "code": "C",
+     "label": "발판의 위치에 맞춰 점프 이어 가기",
+     "family_id": "G16",
+     "tag_hint": 1625
+    },
+    {
+     "code": "D",
+     "label": "흩어진 조건을 대조해 맞는 답 추려내기",
+     "family_id": "G06",
+     "tag_hint": 6129
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E06",
+   "text": "다음 중 더 경험해 보고 싶은 방식을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "반복 도전에서 얻은 성장으로 다음 출발 조건 개선하기",
+     "family_id": "G02",
+     "tag_hint": 3959
+    },
+    {
+     "code": "B",
+     "label": "익숙한 공간이 낯설게 변하는 불안한 분위기 느끼기",
+     "family_id": "G13",
+     "tag_hint": 1667
+    },
+    {
+     "code": "C",
+     "label": "내 선택에 따라 달라지는 후속 이야기 보기",
+     "family_id": "G07",
+     "tag_hint": 6426
+    },
+    {
+     "code": "D",
+     "label": "움직이는 표적을 따라 조준하며 쏘기",
+     "family_id": "G12",
+     "tag_hint": 1774
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E07",
+   "text": "게임을 진행하며 해보고 싶은 일을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "재료를 조합해 필요한 물건 만들기",
+     "family_id": "G08",
+     "tag_hint": 1702
+    },
+    {
+     "code": "B",
+     "label": "운영 상황을 보고 인력이나 예산의 배분 조정하기",
+     "family_id": "G03",
+     "tag_hint": 12472
+    },
+    {
+     "code": "C",
+     "label": "박자에 맞춰 이어지는 입력 따라가기",
+     "family_id": "G14",
+     "tag_hint": 1752
+    },
+    {
+     "code": "D",
+     "label": "서로 맡은 일을 연결해 공동 목표 이루기",
+     "family_id": "G09",
+     "tag_hint": 1685
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E08",
+   "text": "다음 중 끌리는 플레이를 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "내 차례에 다음 행동을 고른 뒤 차례 넘기기",
+     "family_id": "G05",
+     "tag_hint": 1741
+    },
+    {
+     "code": "B",
+     "label": "계속 돌아올 거점에 시설을 더해 확장하기",
+     "family_id": "G04",
+     "tag_hint": 7332
+    },
+    {
+     "code": "C",
+     "label": "상대 플레이어의 대응을 읽으며 대결하기",
+     "family_id": "G10",
+     "tag_hint": 1775
+    },
+    {
+     "code": "D",
+     "label": "다른 차량을 추월해 결승선 순위 높이기",
+     "family_id": "G15",
+     "tag_hint": 699
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E09",
+   "text": "게임에서 이어서 해보고 싶은 활동을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "다른 참가자와 같은 규칙으로 한 판 겨루기",
+     "family_id": "G10",
+     "tag_hint": 1775
+    },
+    {
+     "code": "B",
+     "label": "인물에게 숨겨진 사연을 이야기로 알아가기",
+     "family_id": "G07",
+     "tag_hint": 1742
+    },
+    {
+     "code": "C",
+     "label": "멀리 보이는 낯선 장소를 직접 찾아가 보기",
+     "family_id": "G01",
+     "tag_hint": 3834
+    },
+    {
+     "code": "D",
+     "label": "소리와 동작의 타이밍 맞추기",
+     "family_id": "G14",
+     "tag_hint": 1752
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E10",
+   "text": "다음 중 플레이를 이어가 보고 싶은 방식을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "움직이는 발판에 맞춰 건너갈 타이밍 고르기",
+     "family_id": "G16",
+     "tag_hint": 1625
+    },
+    {
+     "code": "B",
+     "label": "새로 얻은 카드에 맞춰 카드 묶음 바꾸기",
+     "family_id": "G11",
+     "tag_hint": 32322
+    },
+    {
+     "code": "C",
+     "label": "도전마다 새로 주어지는 능력으로 플레이 구성하기",
+     "family_id": "G02",
+     "tag_hint": 1716
+    },
+    {
+     "code": "D",
+     "label": "가진 재료를 어떤 물건으로 만들지 정해 제작하기",
+     "family_id": "G08",
+     "tag_hint": 1702
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E11",
+   "text": "게임에서 직접 해보고 싶은 일을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "운영 기록을 보며 자원 사용량 조정하기",
+     "family_id": "G03",
+     "tag_hint": 12472
+    },
+    {
+     "code": "B",
+     "label": "표적의 거리에 맞춰 조준 위치 조절하기",
+     "family_id": "G12",
+     "tag_hint": 1774
+    },
+    {
+     "code": "C",
+     "label": "보이지 않는 존재를 의식하게 하는 긴장감 경험하기",
+     "family_id": "G13",
+     "tag_hint": 1667
+    },
+    {
+     "code": "D",
+     "label": "상대의 배치에 맞춰 공략 방법 정하기",
+     "family_id": "G05",
+     "tag_hint": 9
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  },
+  {
+   "question_id": "E12",
+   "text": "마지막으로, 다음 중 끌리는 활동을 골라 주세요.",
+   "max_select": 2,
+   "exclusive_codes": [
+    "N",
+    "X"
+   ],
+   "options": [
+    {
+     "code": "A",
+     "label": "조각들이 들어맞는 배치 찾기",
+     "family_id": "G06",
+     "tag_hint": 1664
+    },
+    {
+     "code": "B",
+     "label": "서로 도우며 같은 목표에 도전하기",
+     "family_id": "G09",
+     "tag_hint": 1685
+    },
+    {
+     "code": "C",
+     "label": "이전 주행보다 결승선 도착 시간 줄이기",
+     "family_id": "G15",
+     "tag_hint": 699
+    },
+    {
+     "code": "D",
+     "label": "벽과 길을 배치해 원하는 공간 구조 만들기",
+     "family_id": "G04",
+     "tag_hint": 1643
+    },
+    {
+     "code": "N",
+     "label": "어느 것도 끌리지 않아요",
+     "family_id": null,
+     "tag_hint": null
+    },
+    {
+     "code": "X",
+     "label": "잘 모르겠어요",
+     "family_id": null,
+     "tag_hint": null
+    }
+   ]
+  }
+ ]
+}

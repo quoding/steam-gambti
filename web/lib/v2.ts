@@ -5,10 +5,10 @@ export interface V2Session { session_key: string; owner_key: string }
 export interface V2Option { code: string; label: string }
 export interface V2Question {
   question_id: string; stage: "explore" | "confirm"; text: string; options: V2Option[];
-  max_select?: number; exclusive_codes?: string[];
+  max_select?: number; exclusive_codes?: string[]; context?: string | null;
 }
 export interface V2Route {
-  done: boolean; next: V2Question | null; answered: number; path_length: number; max_total: number;
+  questionnaire_version: string; done: boolean; next: V2Question | null; answered: number; path_length: number; max_total: number;
   path: string[]; dropped: string[]; stage: string;
 }
 export type V2Answers = Record<string, string | string[]>;
@@ -18,6 +18,7 @@ export interface V2Card {
   type_id: string; name: string; tagline: string; is_discovering: boolean; main_tags: V2Tag[]; extra_tags: V2Tag[];
   positive_tags: V2Tag[]; evidence: (V2Tag & { answers: { question_id: string; text: string; answer: string }[] })[];
   empty_text: string | null; question_count: number;
+  checked_families?: string[]; unchecked_families?: string[];
 }
 export interface V2Game {
   appid: number; name: string; image: string | null; store_url: string; short_description: string | null;
@@ -42,7 +43,7 @@ export interface V2Library {
 }
 
 export const V2KEYS = { session: "gembti:v2:session", answers: "gembti:v2:answers", history: "gembti:v2:history",
-  result: "gembti:v2:result", extra: "gembti:v2:extra" };
+  result: "gembti:v2:result", extra: "gembti:v2:extra", version: "gembti:v2:qversion" };
 export const DEFAULT_FILTERS: V2Filters = { korean_only: false, os: "windows", min_positive: 75, min_reviews: 500 };
 
 export async function ensureSession(): Promise<V2Session> {

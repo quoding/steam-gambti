@@ -1,0 +1,26 @@
+{
+ "routing_version": "v2.2",
+ "algorithm": "v2.2",
+ "source": "GEMBTI_QUESTION_BANK_v2.2.md §8",
+ "explore_count": 12,
+ "confirm_families": 4,
+ "questions_per_family": 2,
+ "base_total": 20,
+ "max_total": 24,
+ "interest_slots": 3,
+ "explore_slot": 1,
+ "max_social_in_initial": 1,
+ "family_tie": "탐색 관심 점수(선택된 탐색 문항 수, 최대3) 내림차순 → 해시(gembti-route-v2|routing|bank|layout|탐색 canonical|family|Gxx). 관심 0인 계열도 같은 순서로 상위3에 들어갈 수 있다.",
+ "slot": "상위3 밖 계열에서 해시(…|slot|Gxx) 순 1개. 선호 점수 없음. G09/G10 합계 최대1.",
+ "tag_pick": "계열 안 태그: 선택 횟수/탐색 노출 횟수 내림차순 → 선택 횟수 내림차순 → 해시(…|tag|tagid).",
+ "initial_order": "선택된 4태그의 _1을 계열 순서대로, 이어서 같은 순서로 _2.",
+ "extra_trigger": "정규 카드 미충족, 또는 최초 상위3계열 태그 중 n<2·conditional.",
+ "extra_priority": [
+  "n<2(미확인 응답)인 조사 태그의 _3 — 계열 순서",
+  "conditional 조사 태그의 _3 — 계열 순서",
+  "정규 카드 미충족이고 남은 예산≥2일 때: 아직 묻지 않은 계열(관심순→해시)의 대표 태그 _1·_2"
+ ],
+ "interpretation": "상위3계열의 미확인·conditional만 남고 정규 카드는 충족한 경우에는 _3 보완까지만 하고 새 계열 세트를 열지 않는다(문서 §8.3에 이 경우의 명시가 없어 보수적으로 해석).",
+ "reserve_once": true,
+ "stop_rule": "추가 조건이 없거나 할 수 있는 추가 문항이 없으면 종료. 최소20·최대24, 21·23 종료 허용."
+}

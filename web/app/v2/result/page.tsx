@@ -106,6 +106,13 @@ export default function V2Result() {
       <div style={{ maxWidth: 720 }}>
         <TypeHero card={card as unknown as Card} />
         <p className="tiny" style={{ margin: "8px 4px 0" }}>질문 {card.question_count}개의 답변으로만 정한 결과예요. 라이브러리와 필터는 유형을 바꾸지 않아요.</p>
+        {card.checked_families && (
+          <div className="card" style={{ marginTop: 16 }}>
+            <p className="small" style={{ margin: 0 }}><b>이번에 확인한 영역</b> · {card.checked_families.join(", ")}</p>
+            {card.unchecked_families && card.unchecked_families.length > 0 &&
+              <p className="tiny" style={{ margin: "6px 0 0" }}>아직 확인하지 않은 영역 · {card.unchecked_families.join(", ")}</p>}
+          </div>
+        )}
         {card.evidence.length > 0 && (
           <div className="card" style={{ marginTop: 16 }}>
             <h3 style={{ marginBottom: 6 }}>이 결과의 근거</h3>

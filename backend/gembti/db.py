@@ -134,6 +134,11 @@ MIGRATIONS: list[str] = [
       PRIMARY KEY (submission_id, request_no, rank)
     );
     """,
+    # 4: v2 질문지 은행 버전 고정. 기존 세션의 진행 중 응시는 v2.0으로 이어간다. 분기 판정 로그 보존.
+    """
+    ALTER TABLE v2_sessions ADD COLUMN attempt_version TEXT NOT NULL DEFAULT 'v2.0';
+    ALTER TABLE v2_submissions ADD COLUMN route_json TEXT;
+    """,
 ]
 
 # 백업 사본에서 제거하는 개인 원문 테이블 (서술·라이브러리·SteamID)

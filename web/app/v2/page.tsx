@@ -3,22 +3,26 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import LibraryPanel from "@/components/LibraryPanel";
 import TopBar from "@/components/TopBar";
-import { errorMessage } from "@/lib/api";
+import { api, errorMessage } from "@/lib/api";
 import { ensureSession, type V2Session } from "@/lib/v2";
 
 export default function V2Home() {
   const [session, setSession] = useState<V2Session | null>(null);
   const [showLib, setShowLib] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [intro, setIntro] = useState<string[]>([]);
   useEffect(() => { ensureSession().then(setSession).catch((e) => setErr(errorMessage(e))); }, []);
+  useEffect(() => {
+    api<{ intro: string }>("/v2/questionnaire").then((q) => setIntro(q.intro.split("\n\n"))).catch(() => setIntro([]));
+  }, []);
 
   return (
     <main className="shell">
       <TopBar right={<span className="chip soft">v2 미리보기</span>} />
       <section className="hero-intro">
-        <span className="chip warm">질문 20~24개 · 약 6분</span>
+        <span className="chip warm">질문 20~24개</span>
         <h1 style={{ marginTop: 14 }}>끌리는 장면부터 고르면,<br />질문이 나에게 맞춰져요</h1>
-        <p>처음 12문항으로 관심 있는 쪽을 찾고, 그중 몇 가지를 서로 다른 상황으로 다시 확인해요. 근거가 확인된 취향만 결과에 써요.</p>
+        {intro.map((t) => <p key={t}>{t}</p>)}
       </section>
       {err && <div className="notice err">{err}</div>}
       <div className="card stack" style={{ marginTop: 20 }}>

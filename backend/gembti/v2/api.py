@@ -18,7 +18,7 @@ from gembti.service import KST, now_iso
 from gembti.v2 import library_job, store
 from gembti.v2.catalog_v2 import CatalogV2Unavailable, load_active
 from gembti.v2.engine import judge_v2, route
-from gembti.v2.policy import get_v2
+from gembti.v2.policy import BANKS, get_v2
 from gembti.v2.recommend import POSITIVE_PRESETS, REVIEW_PRESETS, FiltersV2, positive_ratio, recommend_v2
 
 router = APIRouter(prefix="/api/v2")
@@ -37,6 +37,7 @@ class Owner(BaseModel):
 
 class RouteIn(Owner):
     answers: dict[str, str | list[str]] = Field(default_factory=dict)
+    questionnaire_version: str | None = Field(default=None, max_length=16)  # 응시 시작 때 받은 값을 그대로
 
 
 class FilterIn(BaseModel):
@@ -93,31 +94,41 @@ def _series_of() -> dict[int, str]:
 # ---------------------------------------------------------------- 질문
 
 
-def question_payload(qid: str) -> dict:
+def _policy_for(con, body: RouteIn, fresh: bool):
+    if body.questionnaire_version and body.questionnaire_version not in BANKS:
+        raise HTTPException(422, "unknown_questionnaire_version")
+    return get_v2(store.attempt_version(con, body.session_key, body.questionnaire_version, fresh,
+                                        P.versions["questionnaire_version"]))
+
+
+def question_payload(p, qid: str) -> dict:
     if qid.startswith("E"):
-        q = P.explore_by_id[qid]
+        q = p.explore_by_id[qid]
         return {"question_id": qid, "stage": "explore", "text": q["text"], "max_select": q["max_select"],
                 "exclusive_codes": q["exclusive_codes"],
                 "options": [{"code": o["code"], "label": o["label"]} for o in q["options"]]}
-    q = P.confirm_by_id[qid]
-    return {"question_id": qid, "stage": "confirm", "text": q["text"],
-            "options": [{"code": s["code"], "label": s["label"]} for s in P.confirm["scale"]]}
+    q = p.confirm_by_id[qid]
+    return {"question_id": qid, "stage": "confirm", "text": q["text"], "context": p.confirm.get("context"),
+            "options": [{"code": s["code"], "label": s["label"]} for s in p.confirm["scale"]]}
 
 
 @router.post("/sessions")
 def new_session():
     con = db.connect()
     try:
-        key, owner = store.new_session(con)
+        key, owner = store.new_session(con, P.versions["questionnaire_version"])
     finally:
         con.close()
     return {"session_key": key, "owner_key": owner, "versions": P.versions}
 
 
 @router.get("/questionnaire")
-def questionnaire():
-    return {"versions": P.versions, "intro": P.explore["intro"], "base_total": P.routing["base_total"],
-            "max_total": P.routing["max_total"],
+def questionnaire(version: str | None = None):
+    if version is not None and version not in BANKS:
+        raise HTTPException(404, "not_found")
+    p = get_v2(version)
+    return {"versions": p.versions, "intro": p.explore["intro"], "base_total": p.routing["base_total"],
+            "max_total": p.routing["max_total"],
             "free_texts": [{"free_text_id": f["free_text_id"], "text": f["text"], "max_chars": f["max_chars"]}
                            for f in V1.free_texts],
             "filters": {"min_positive": list(POSITIVE_PRESETS), "min_reviews": list(REVIEW_PRESETS)}}
@@ -126,14 +137,18 @@ def questionnaire():
 @router.post("/route")
 def next_question(body: RouteIn):
     con = _con_owner(body)
-    con.close()
     try:
-        r = route(P, body.answers)
+        p = _policy_for(con, body, fresh=not body.answers)
+    finally:
+        con.close()
+    try:
+        r = route(p, body.answers)
     except ValueError as e:
         raise HTTPException(422, str(e))
     kept = [q for q in r.path if q in body.answers]
-    return {"done": r.done, "next": question_payload(r.next_question) if r.next_question else None,
-            "answered": len(kept), "path_length": len(r.path), "max_total": P.routing["max_total"],
+    return {"questionnaire_version": p.versions["questionnaire_version"],
+            "done": r.done, "next": question_payload(p, r.next_question) if r.next_question else None,
+            "answered": len(kept), "path_length": len(r.path), "max_total": p.routing["max_total"],
             "path": r.path, "dropped": sorted(k for k in body.answers if k not in r.path), "stage": r.stage}
 
 
@@ -157,22 +172,25 @@ def _lib_state(con, key: str) -> dict:
             "analysis_excluded": sorted(g["appid"] for g in lv["games"] if g["analysis_excluded"])}
 
 
-def card_payload(j) -> dict:
+def card_payload(p, j) -> dict:
     c = j.card
     def tag(t):
-        return {"tagid": t, "name": P.tag_name[t], "family": P.family_by_id[P.family_of[t]]["name"]}
+        return {"tagid": t, "name": p.tag_name[t], "family": p.family_by_id[p.family_of[t]]["name"]}
     evidence = []
     for t in c.main_tagids:
         st = j.tags[t]
         evidence.append({**tag(t), "answers": [
-            {"question_id": q, "text": P.confirm_by_id[q]["situation"],
-             "answer": next(s["label"] for s in P.confirm["scale"] if s["code"] == str(j.answers.get(q)).upper())}
+            {"question_id": q, "text": p.confirm_by_id[q].get("situation") or p.confirm_by_id[q]["text"],
+             "answer": next(s["label"] for s in p.confirm["scale"] if s["code"] == str(j.answers.get(q)).upper())}
             for q in st.questions if q in j.answers]})
     return {"type_id": c.type_id, "name": c.name, "tagline": c.tagline, "is_discovering": c.is_discovering,
             "main_tags": [tag(t) for t in c.main_tagids], "extra_tags": [tag(t) for t in c.extra_tagids],
             "positive_tags": [tag(t) for t in c.positive_tagids], "evidence": evidence,
-            "empty_text": P.cards["discovering"]["empty_text"] if not c.positive_tagids else None,
-            "question_count": len(j.route.path)}
+            "empty_text": p.cards["discovering"]["empty_text"] if not c.positive_tagids else None,
+            "question_count": len(j.route.path),
+            # 결과에서 '이번에 확인한 영역'과 '아직 확인하지 않은 영역'을 구별해 보여준다(관심 높음으로 단정하지 않음)
+            "checked_families": [p.family_by_id[f]["name"] for f in j.route.chosen_tags],
+            "unchecked_families": [f["name"] for f in p.families if f["family_id"] not in j.route.chosen_tags]}
 
 
 def _game(cat, appid: int, it: dict) -> dict:
@@ -228,8 +246,9 @@ def _recommend(con, sub_id: str, key: str, j, f: FilterIn) -> dict:
 def submit(body: SubmitIn):
     con = _con_owner(body)
     try:
+        p = _policy_for(con, body, fresh=False)
         try:
-            j = judge_v2(P, body.answers, require_done=True)
+            j = judge_v2(p, body.answers, require_done=True)
         except ValueError as e:
             raise HTTPException(422, str(e))
         fts = {}
@@ -242,17 +261,21 @@ def submit(body: SubmitIn):
         exp = (datetime.now(KST) + timedelta(days=config.FREE_TEXT_RETENTION_DAYS)).isoformat(timespec="seconds")
         with db.tx(con):
             store.purge_v2(con)
-            con.execute("INSERT INTO v2_submissions VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (
+            route_log = {k: getattr(j.route, k) for k in ("initial_families", "interest_families",
+                                                          "explore_slot_family", "chosen_tags", "extra_sets")}
+            con.execute("INSERT INTO v2_submissions (submission_id, session_key, session_id_v2, owner_key_hash, "
+                        "versions_json, answers_json, path_json, dropped_json, card_json, tags_json, "
+                        "experiment_consent, created_at, route_json) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", (
                 sub_id, body.session_key, j.session_id,
-                hashlib.sha256(("gembti-v2-owner|" + owner).encode()).hexdigest(), json.dumps(P.versions),
+                hashlib.sha256(("gembti-v2-owner|" + owner).encode()).hexdigest(), json.dumps(p.versions),
                 json.dumps(j.answers, sort_keys=True), json.dumps(j.route.path), json.dumps(j.dropped),
                 json.dumps(j.card.as_dict()), json.dumps({str(t): s.__dict__ for t, s in j.tags.items()}),
-                int(body.experiment_consent), now_iso()))
+                int(body.experiment_consent), now_iso(), json.dumps(route_log, sort_keys=True)))
             con.executemany("INSERT INTO v2_free_texts VALUES (?,?,?,?)", [(sub_id, k, v, exp) for k, v in fts.items()])
         recs = _recommend(con, sub_id, body.session_key, j, body.filters)
     finally:
         con.close()
-    return {"submission_id": sub_id, "card": card_payload(j), "recommendations": recs}
+    return {"submission_id": sub_id, "card": card_payload(p, j), "recommendations": recs}
 
 
 def _load_sub(con, sub_id: str, o: Owner):
@@ -260,16 +283,19 @@ def _load_sub(con, sub_id: str, o: Owner):
                       (sub_id, o.session_key)).fetchone()
     if row is None:
         raise HTTPException(404, "not_found")
-    if json.loads(row["versions_json"]) != P.versions:
+    versions = json.loads(row["versions_json"])
+    qv = versions.get("questionnaire_version")
+    if qv not in BANKS or get_v2(qv).versions != versions:
         raise HTTPException(409, "submission_version_mismatch")  # 과거 제출을 새 정책으로 묵시 재판정하지 않음
-    return row, judge_v2(P, json.loads(row["answers_json"]))
+    p = get_v2(qv)  # 제출이 쓴 은행으로만 다시 판정
+    return row, p, judge_v2(p, json.loads(row["answers_json"]))
 
 
 @router.post("/submissions/{sub_id}/recommendations")
 def rerecommend(sub_id: str, body: RecIn):
     con = _con_owner(body)
     try:
-        _, j = _load_sub(con, sub_id, body)
+        _, _, j = _load_sub(con, sub_id, body)
         try:
             recs = _recommend(con, sub_id, body.session_key, j, body.filters)
         except ValueError as e:
@@ -283,14 +309,14 @@ def rerecommend(sub_id: str, body: RecIn):
 def view(sub_id: str, body: RecIn):
     con = _con_owner(body)
     try:
-        _, j = _load_sub(con, sub_id, body)
+        _, p, j = _load_sub(con, sub_id, body)
         last = con.execute("SELECT filters_json FROM v2_rec_requests WHERE submission_id = ? ORDER BY request_no DESC "
                            "LIMIT 1", (sub_id,)).fetchone()
         f = FilterIn(**{k: v for k, v in json.loads(last[0]).items() if k != "exclude_owned"}) if last else body.filters
         recs = _recommend(con, sub_id, body.session_key, j, f)
     finally:
         con.close()
-    return {"submission_id": sub_id, "card": card_payload(j), "recommendations": recs}
+    return {"submission_id": sub_id, "card": card_payload(p, j), "recommendations": recs}
 
 
 # ---------------------------------------------------------------- 라이브러리

@@ -34,7 +34,14 @@ export default function V2Test() {
   const ask = useCallback(async (s: V2Session, a: V2Answers, prevPath?: string[]) => {
     setBusy(true); setErr(null);
     try {
-      const r = await api<V2Route>("/v2/route", { ...s, answers: a });
+      // 응시를 시작할 때 받은 질문지 버전을 끝까지 보낸다(진행 중 응시가 새 질문지로 재해석되지 않게)
+      const qv = Object.keys(a).length ? load<string>("session", V2KEYS.version) : null;
+      const r = await api<V2Route>("/v2/route", { ...s, answers: a, ...(qv ? { questionnaire_version: qv } : {}) });
+      if (load<string>("session", V2KEYS.version) !== r.questionnaire_version) {
+        // 질문지 버전이 바뀌면 같은 문항 ID라도 문구가 다르므로 이전 문구 캐시를 버린다
+        remove("session", "gembti:v2:qcache"); setQcache({});
+      }
+      save("session", V2KEYS.version, r.questionnaire_version);
       setRt(r);
       if (prevPath) {
         const changed = prevPath.filter((q) => !r.path.includes(q)).length;
@@ -122,11 +129,12 @@ export default function V2Test() {
     try {
       const r = await api<{ submission_id: string }>("/v2/submit", {
         ...session, answers, experiment_consent: extra.consent, filters: extra.filters,
+        questionnaire_version: load<string>("session", V2KEYS.version) ?? undefined,
         free_texts: Object.fromEntries(Object.entries(extra.free).filter(([, v]) => v.trim())),
       });
       save("session", V2KEYS.result, r);
       save("local", "gembti:v2:last", r.submission_id);
-      remove("session", V2KEYS.answers); remove("session", V2KEYS.history); remove("session", V2KEYS.extra);
+      remove("session", V2KEYS.answers); remove("session", V2KEYS.history); remove("session", V2KEYS.extra); remove("session", V2KEYS.version); remove("session", "gembti:v2:qcache");
       router.push("/v2/result/");
     } catch (e) { setErr(errorMessage(e)); } finally { setBusy(false); }
   };
@@ -171,6 +179,7 @@ export default function V2Test() {
               {explore && <span className="tiny">최대 {q.max_select ?? 2}개</span>}
             </div>
             <div className="q-text" tabIndex={-1} ref={headRef} id={`qt-${q.question_id}`}>{q.text}</div>
+            {!explore && q.context && <p className="tiny" style={{ margin: "6px 0 0" }}>{q.context}</p>}
             <div className="options" role={explore ? "group" : "radiogroup"} aria-labelledby={`qt-${q.question_id}`}>
               {q.options.map((o) => (
                 <button key={o.code} role={explore ? "checkbox" : "radio"} aria-checked={pick.includes(o.code)}

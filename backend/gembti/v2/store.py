@@ -30,11 +30,24 @@ def steamid_hash(steamid: str) -> str:
     return hmac.new(_SALT.encode(), steamid.encode(), hashlib.sha256).hexdigest()
 
 
-def new_session(con: sqlite3.Connection) -> tuple[str, str]:
+def new_session(con: sqlite3.Connection, attempt_version: str) -> tuple[str, str]:
     key, owner = secrets.token_hex(16), secrets.token_urlsafe(24)
     now = now_iso()
-    con.execute("INSERT INTO v2_sessions VALUES (?,?,?,?)", (key, _hash("gembti-v2-owner|" + owner), now, now))
+    con.execute("INSERT INTO v2_sessions (session_key, owner_key_hash, created_at, last_seen, attempt_version) "
+                "VALUES (?,?,?,?,?)", (key, _hash("gembti-v2-owner|" + owner), now, now, attempt_version))
     return key, owner
+
+
+def attempt_version(con: sqlite3.Connection, key: str, requested: str | None, fresh: bool, active: str) -> str:
+    """응시에 쓸 질문지 버전. 명시값 > 새 응시(답 없음)는 현재 은행으로 고정 > 세션에 고정된 버전.
+
+    마이그레이션 4 이전 세션은 'v2.0'으로 고정되어 있어, 진행 중이던 응시가 새 은행으로 재해석되지 않는다."""
+    if requested:
+        return requested
+    if fresh:
+        con.execute("UPDATE v2_sessions SET attempt_version = ? WHERE session_key = ?", (active, key))
+        return active
+    return con.execute("SELECT attempt_version FROM v2_sessions WHERE session_key = ?", (key,)).fetchone()[0]
 
 
 def check_session(con: sqlite3.Connection, key: str, owner: str) -> None:

@@ -3,13 +3,16 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, field
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 
 from gembti.config import POLICY_DIR
 
 V2_DIR = POLICY_DIR / "v2"
 EXPLORE_CODES = ("A", "B", "C", "D")
+# 질문지 은행: 버전마다 문항·분기 설정을 분리한다. registry·cards는 공용(policy/v2/).
+# 과거 응시·제출은 자기 버전의 은행으로만 다시 판정한다(새 은행으로 묵시 재판정 금지).
+BANKS = {"v2.0": V2_DIR, "v2.2": V2_DIR / "banks" / "v2.2"}
 
 
 @dataclass
@@ -41,10 +44,15 @@ def _read(p: Path) -> dict:
     return json.loads(p.read_text(encoding="utf-8"))
 
 
-def load_v2(d: Path = V2_DIR) -> V2Policy:
-    reg = _read(d / "registry.json")
+def active_version() -> str:
+    return _read(V2_DIR / "active.json")["questionnaire_version"]
+
+
+def load_v2(d: Path = V2_DIR, shared: Path | None = None) -> V2Policy:
+    shared = shared or (d if (d / "registry.json").exists() else V2_DIR)
+    reg = _read(shared / "registry.json")
     p = V2Policy(_read(d / "versions.json"), reg["families"], _read(d / "explore.json"), _read(d / "confirm.json"),
-                 _read(d / "cards.json"), _read(d / "routing.json"))
+                 _read(shared / "cards.json"), _read(d / "routing.json"))
     for f in p.families:
         p.family_by_id[f["family_id"]] = f
         for t in f["tags"]:
@@ -102,9 +110,11 @@ def validate_v2(p: V2Policy, known_tagids: set[int] | None = None) -> list[str]:
         qs = p.confirm_by_tag.get(t, [])
         if len(qs) < 3:
             errs.append(f"{t}: 확인 문항 3개 필요(기본 2 + 추가 1), 현재 {len(qs)}")
-        sits = [p.confirm_by_id[q]["situation"] for q in qs]
+        sits = [p.confirm_by_id[q].get("situation") or p.confirm_by_id[q]["text"] for q in qs]
         if len(set(sits)) != len(sits):
             errs.append(f"{t}: 같은 상황 반복")
+    if p.routing.get("algorithm") == "v2.2":
+        errs += _validate_v22(p, tags)
     texts = [q["text"] for q in p.confirm["questions"]]
     if len(texts) != len(set(texts)):
         errs.append("같은 문구의 확인 문항 중복")
@@ -120,6 +130,40 @@ def validate_v2(p: V2Policy, known_tagids: set[int] | None = None) -> list[str]:
     return errs
 
 
-@lru_cache(maxsize=1)
-def get_v2() -> V2Policy:
-    return load_v2()
+def _validate_v22(p: V2Policy, tags: list[int]) -> list[str]:
+    """질문지 v2.2 명세 §11.1: 계열별 탐색 3회·서로 다른 위치, 모든 태그 분기 보기, 태그별 _1·_2 기본 + _3 예비."""
+    errs = []
+    pos: dict[str, list[str]] = {}
+    hinted = set()
+    for q in p.explore["questions"]:
+        acts = [o for o in q["options"] if o["code"] in EXPLORE_CODES]
+        if len(acts) != 4:
+            errs.append(f"{q['question_id']}: 활동 보기는 4개")
+        for o in acts:
+            pos.setdefault(o["family_id"], []).append(o["code"])
+            hinted.add(o["tag_hint"])
+    for f in p.family_by_id:
+        if len(pos.get(f, [])) != 3 or len(set(pos.get(f, []))) != 3:
+            errs.append(f"{f}: 탐색 3회·서로 다른 위치 필요 ({pos.get(f)})")
+    if set(tags) - hinted:
+        errs.append(f"탐색 보기가 없는 태그 {sorted(set(tags) - hinted)}")
+    for t in tags:
+        want = {f"C{t}_1": "primary", f"C{t}_2": "primary", f"C{t}_3": "reserve"}
+        got = {q: p.confirm_by_id[q].get("role") for q in p.confirm_by_tag.get(t, [])}
+        if got != want:
+            errs.append(f"{t}: 확인 문항은 _1·_2 기본, _3 예비 ({got})")
+    if len(p.confirm["questions"]) != 75:
+        errs.append("확인 문항은 75개")
+    return errs
+
+
+@cache
+def get_v2(version: str | None = None) -> V2Policy:
+    """version 없으면 현재 새 응시에 쓰는 은행(policy/v2/active.json)."""
+    v = version or active_version()
+    if v not in BANKS:
+        raise KeyError(f"알 수 없는 질문지 버전 {v}")
+    p = load_v2(BANKS[v], V2_DIR)
+    if p.versions["questionnaire_version"] != v:
+        raise ValueError(f"은행 {v}의 versions.json 불일치")
+    return p
