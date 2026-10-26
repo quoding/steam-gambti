@@ -35,7 +35,7 @@ export default function V2Home() {
         <h3>v1과 달라진 점</h3>
         <ul className="muted small" style={{ margin: 0, paddingLeft: 18 }}>
           <li>슈팅·공포·리듬·레이싱·플랫폼까지 16개 영역, 25개 Steam 태그를 다뤄요.</li>
-          <li>추천 게임마다 Steam 전체 사용자 평가(긍정률·리뷰 수)를 보여주고, 최소 긍정률과 리뷰 수로 거를 수 있어요.</li>
+          <li>추천 게임마다 Steam 평가(Steam 구매 기준·전체 언어의 긍정률·리뷰 수)를 보여주고, 최소 긍정률과 리뷰 수로 거를 수 있어요.</li>
           <li>모든 태그를 다 묻지는 않아요. 주요 취향 몇 가지를 근거와 함께 찾는 것이 목표예요.</li>
         </ul>
         <p className="tiny" style={{ margin: 0 }}>기존 검사는 <Link href="/">처음 화면</Link>에서 그대로 할 수 있어요.</p>
